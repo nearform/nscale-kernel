@@ -1,0 +1,31 @@
+{
+  "name": "nfd-kernel",
+  "description": "nearForm deployer kernel",
+  "keywords": [
+    "nearForm",
+    "deployer"
+  ],
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Peter Elger (http://nearform.com/)",
+  "contributors": [
+    "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "express": "~4.0.0",
+    "wrench": "~1.5.8",
+    "uuid": "~1.4.1",
+    "fs-extra": "~0.8.1",
+    "winston": "~0.7.3"
+  },
+  "main": "lib/main",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelger/nfd-kernel.git"
+  },
+  "devDependencies": {}
+}
