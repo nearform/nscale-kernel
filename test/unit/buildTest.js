@@ -35,13 +35,10 @@ describe('config test', function() {
 
   it('should build the nginx sample container', function(done){
     this.timeout(1000000);
-    debugger;
-    root.deserialize(__dirname + '/../../../samples/web/web.nfd.json');
+    root.deserialize(__dirname + '/../../../samples/web/nfd.json');
     var nginx = root.containerById("3");
     nginx.build(out, function(err, result) {
       console.log(err);
-      console.log('-----------------');
-      console.log(JSON.stringify(result));
       assert(!err);
       done();
     });
