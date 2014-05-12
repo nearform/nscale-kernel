@@ -34,9 +34,9 @@ describe('config test', function() {
 
 
   it('should deserialize the web sample configuration', function(done){
-    var containers = root.deserialize(__dirname + '/../../../samples/web/web.nfd.json');
-    root.dump(out);
-    console.log(JSON.stringify(containers, null, 2));
+    root.load(__dirname + '/../../../nfd-samples/web/nfd.json');
+    root.dumpContainerDefs(out);
+    //console.log(JSON.stringify(containers, null, 2));
     done();
   });
 });

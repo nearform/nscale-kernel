@@ -15,8 +15,10 @@
 'use strict';
 
 var assert = require('assert');
-var root = require('../../lib/container/root')({ 'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out' });
+var root = require('../../lib/container/root')({'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out'});
+var builder = require('../../lib/container/build/builder')({'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out'});
 var out = require('../../lib/util/consoleOut');
+
 
 
 describe('config test', function() {
@@ -35,10 +37,13 @@ describe('config test', function() {
 
   it('should build the nginx sample container', function(done){
     this.timeout(1000000);
-    root.deserialize(__dirname + '/../../../samples/web/nfd.json');
-    var nginx = root.containerById("3");
-    nginx.build(out, function(err, result) {
+    root.load(__dirname + '/../../../nfd-samples/web/nfd.json');
+
+    var nginx = root.containerDefByDefId('3');
+    builder.build(nginx, out, function(err, result) {
+      //nginx.build(out, function(err, result) {
       console.log(err);
+      console.log(result);
       assert(!err);
       done();
     });

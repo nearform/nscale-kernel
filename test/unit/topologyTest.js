@@ -15,40 +15,33 @@
 'use strict';
 
 var assert = require('assert');
+var root = require('../../lib/container/root')({ 'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out' });
+var topology = require('../../lib/topology/topology')();
+var out = require('../../lib/util/consoleOut');
+
+
+describe('config test', function() {
+
+  beforeEach(function(done) {
+    done();
+  });
 
 
 
-/**
- * container abstraction
- */
-exports.create = function(json) {
-  assert(json);
-
-  var _json;
+  afterEach(function(done) {
+    done();
+  });
 
 
 
-  /**
-   * build the container and its children
-   */
-  var build = function() {
-  };
+  it('should deserialize the web sample configuration', function(done){
+    root.load(__dirname + '/../../../nfd-samples/web/nfd.json');
+    topology.load(root);
+    topology.dumpTopology(out);
+    //console.log(JSON.stringify(containers, null, 2));
+    done();
 
-
-
-  /**
-   * construct the container
-   */
-  var construct = function(json) {
-    _json = json;
-  };
-
-
-
-  construct(json);
-  return {
-    build: build,
-  };
-};
+  });
+});
 
 
