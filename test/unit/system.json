@@ -1,0 +1,106 @@
+
+{
+  "name": "web 1",
+  "namespace": "web1",
+  "id": "1",
+
+  "containerDefinitions": [
+    {"id": "1",
+     "name": "sg-1234",
+     "type": "aws-sg",
+     "specific": {
+       "sg-id": "12341234"
+     }
+    },
+
+    {"id": "5",
+     "name": "elb-1234",
+     "type": "aws-elb",
+     "specific": {
+       "elb-id": "34502876"
+     }
+    },
+
+    {"id": "2",
+     "name": "inst-1234",
+     "type": "aws-ami",
+     "specific": {
+       "ami-id": "2342344"
+     }
+    },
+
+    {"id": "3",
+     "name": "nginx-1",
+     "type": "docker",
+     "specific": {
+       "targetName": "nginx",
+       "path": "/Users/pelger/work/nearform/code/product/nfd/nfd-samples/web/nginx",
+       "buildScript": "sh build.sh",
+       "outputDir": "/.",
+       "deployScript": "/deploy.sh"
+     }
+    },
+
+    {"id": "4",
+     "name": "node-1",
+     "type": "docker",
+     "specific": {
+       "targetName": "myapp",
+       "path": "/Users/pelger/work/nearform/code/product/nfd/nfd-samples/web/exampleApp",
+       "buildScript": "sh build.sh",
+       "outputDir": "/dist",
+       "deployScript": "/deploy.sh"
+     }
+    }
+  ],
+
+  "topology": {
+    "containers": {
+      "10": {"id": "10",
+             "containerDefinitionId": "1",
+             "containedBy": "10",
+             "contains": ["20", "21"]},
+
+      "20": {"id": "20",
+             "containerDefinitionId": "2",
+             "containedBy": "10",
+             "contains": ["30", "31", "32"]},
+
+      "21": {"id": "21",
+             "containerDefinitionId": "2",
+             "containedBy": "10",
+             "contains": ["33", "34", "35"]},
+
+      "30": {"id": "30",
+             "containerDefinitionId": "3",
+             "containedBy": "20",
+             "contains": []},
+
+      "31": {"id": "31",
+             "containerDefinitionId": "4",
+             "containedBy": "20",
+             "contains": []},
+
+      "32": {"id": "32",
+             "containerDefinitionId": "4",
+             "containedBy": "20",
+             "contains": []},
+
+      "33": {"id": "33",
+             "containerDefinitionId": "3",
+             "containedBy": "21",
+             "contains": []},
+
+      "34": {"id": "34",
+             "containerDefinitionId": "4",
+             "containedBy": "21",
+             "contains": []},
+
+      "35": {"id": "35",
+             "containerDefinitionId": "4",
+             "containedBy": "21",
+             "contains": []}
+    }
+  }
+}
+
