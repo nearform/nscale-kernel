@@ -3,10 +3,10 @@ echo stopping...
 sudo docker stop $(sudo docker ps | grep __TARGETNAME__ | awk '{print $1}')
 sleep 10
 echo pulling...
-sudo docker pull __REPOSITORY__:5000/__TARGETNAME__
+sudo docker pull __REPOSITORY__:5000/__TARGETNAME__-__REVISIONNUMBER__
 echo cleaning...
-sudo docker ps -a -notrunc | grep 'Exit' | awk '{print $1}' | xargs -r sudo docker rm
-sudo docker images -notrunc| grep none | awk '{print $3}' | xargs -r sudo docker rmi
+#sudo docker ps -a -notrunc | grep 'Exit' | awk '{print $1}' | xargs -r sudo docker rm
+#sudo docker images -notrunc| grep none | awk '{print $3}' | xargs -r sudo docker rmi
 echo running...
 sudo docker run __ARGUMENTS__
 ENDSSH
