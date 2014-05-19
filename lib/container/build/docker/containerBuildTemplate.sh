@@ -7,10 +7,10 @@ sudo docker export $TMPID > /tmp/$TMPID
 sudo cat /tmp/$TMPID | sudo docker import - __NAMESPACE__/__TARGETNAME__
 
 # push to the container registry - on this system
-#DOCKERID=`sudo docker images | grep  '^$1\/$2 ' | grep latest | awk -v x=3 '{print $x}'`
+DOCKERID=`sudo docker images | grep  '^__NAMESPACE__\/__TARGETNAME__ ' | grep latest | awk -v x=3 '{print $x}'`
 #sudo docker tag $DOCKERID nearform/screenplay_$bn
-#sudo docker tag $DOCKERID localhost.localdomain:5000/$2
-#sudo docker push localhost.localdomain:5000/$2
+sudo docker tag $DOCKERID localhost.localdomain:5000/__TARGETNAME__
+sudo docker push localhost.localdomain:5000/__TARGETNAME__
 
 # cleandown
 DOCKERTMPID=`sudo docker images | grep  '^__NAMESPACE__\/__TARGETNAME__tmp ' | grep latest | awk -v x=3 '{print $x}'`
