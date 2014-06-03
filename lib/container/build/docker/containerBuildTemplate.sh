@@ -9,8 +9,9 @@ sudo cat /tmp/$TMPID | sudo docker import - __NAMESPACE__/__TARGETNAME__
 # push to the container registry - on this system
 DOCKERID=`sudo docker images | grep  '^__NAMESPACE__\/__TARGETNAME__ ' | grep latest | awk -v x=3 '{print $x}'`
 #sudo docker tag $DOCKERID nearform/screenplay_$bn
-sudo docker tag $DOCKERID localhost.localdomain:5000/__TARGETNAME__-__REVISIONNUMBER__
-sudo docker push localhost.localdomain:5000/__TARGETNAME__-__REVISIONNUMBER__
+sudo docker tag $DOCKERID __NAMESPACE__/__TARGETNAME__-__BUILDNUMBER__
+sudo docker tag $DOCKERID localhost.localdomain:5000/__TARGETNAME__-__BUILDNUMBER__
+sudo docker push localhost.localdomain:5000/__TARGETNAME__-__BUILDNUMBER__
 
 # cleandown
 #DOCKERTMPID=`sudo docker images | grep  '^__NAMESPACE__\/__TARGETNAME__tmp ' | grep latest | awk -v x=3 '{print $x}'`
