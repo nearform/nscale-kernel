@@ -35,6 +35,7 @@ describe('config test', function() {
 
 
 
+  /*
   it('should create a plan and commands to deploy an updated container', function(done){
     this.timeout(10000000);
     var before = require('./data/sys1/sysbase.json');
@@ -49,16 +50,27 @@ describe('config test', function() {
       done();
     });
   });
+  */
 
 
 
-  /*
   it('should create a plan and commands to spin up a fresh AMI', function(done){
-    done();
+    this.timeout(10000000);
+    var before = require('./data/sys1/sysbase.json');
+    var after = require('./data/sys1/addedMachine.json');
+
+    var plan = planner(before.system, after.system);
+    console.log(plan);
+    deployer.deployPlan(before, after, plan, 'preview', out, function(err) {
+      console.log('--------------------');
+      console.log(out.operations());
+      console.log('--------------------');
+      done();
+    });
   });
 
 
-
+  /*
   it('should create a plan and commands to move a container', function(done){
     done();
   });
