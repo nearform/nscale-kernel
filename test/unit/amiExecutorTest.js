@@ -14,22 +14,29 @@
 
 'use strict';
 
-var executor = require('../../../lib/topology/deploy/executor/aws/amiExecutor')();
+var executor = require('../../lib/topology/deploy/executor/aws/amiExecutor')();
 var connection = { write: function(str) { console.log(str); } };
-var out = require('../../../../nfd-protocol/lib/networkOut')(connection, null);
+var out = require('../../../nfd-protocol/lib/networkOut')(connection, null);
 
 var TARGET_HOST = null;
-var SYSTEM = null;
 
 var amiContainerDef = {'name': 'Machine',
                        'type': 'aws-ami',
-                       'specific': {'repositoryToken': '04551b154404a852e663aba4c3fa299e04f6e8a5'},
+                       'specific': {
+                         'amiid': 'ami-139c5f64',
+                         'repositoryToken': '04551b154404a852e663aba4c3fa299e04f6e8a5',
+                         'securityGroupIds': ['sg-8daf81fa'],
+                         'instanceType': 'm1.small'
+                        },
                        'id': '74c88a1d-95c9-4374-8490-3c3dc318688b'};
 var container = {'20': {'id': '20',
                         'containerDefinitionId': '74c88a1d-95c9-4374-8490-3c3dc318688b',
                         'containedBy': '10',
                         'contains': [ '109bcbe2-ce9e-4aeb-80a4-7bc464d0af55' ],
                         'specific': { 'ipaddress': '10.74.143.152' }}};
+var system = { keyName: 'fred' };
+
+
 
 describe('ami executor test', function() {
 
@@ -47,8 +54,9 @@ describe('ami executor test', function() {
 
   it('should spin up an instance', function(done){
     this.timeout(10000000);
-    executor.start(TARGET_HOST, SYSTEM, amiContainerDef, container, out, function(err) {
+    executor.start(TARGET_HOST, system, amiContainerDef, container, out, function(err, instances) {
       console.log(err);
+      console.log(instances);
       done();
     });
   });
