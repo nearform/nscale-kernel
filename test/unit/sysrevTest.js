@@ -16,7 +16,6 @@
 
 var assert = require('assert');
 var sysrev = require('../../lib/sysrev/sysrev')({systemsRoot: '/tmp/nfd/systems'});
-//var meta = require('../../lib/sysrev/sysrevMeta')({systemsRoot: '/tmp/nfd/systems'});
 var CONTAINER_DEF = { 'name': 'test',
                       'type': 'docker',
                       'specific': {
