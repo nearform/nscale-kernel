@@ -60,6 +60,22 @@ describe('ami executor test', function() {
       done();
     });
   });
+
+  it('should add an instance', function(done) {
+    executor.add(TARGET_HOST, system, amiContainerDef, container, out, function(err, instances) {
+      console.log(err);
+      console.log(instances);
+      done();
+    });
+  });
+
+  it('should link an instance', function(done) {
+    executor.link(TARGET_HOST, system, amiContainerDef, container, out, function(err, instances) {
+      console.log(err);
+      console.log(instances);
+      done();
+    });
+  });
 });
 
 

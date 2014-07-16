@@ -16,5 +16,5 @@ cd ../nfd-web
 nohup forever server.js > ../log/web.log 2>&1 &
 
 ps aux | grep -i node
-tail -f ../../log/*
+tail -f ../log/*
 
