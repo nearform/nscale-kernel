@@ -14,6 +14,7 @@
 
 'use strict';
 
+var _ = require('underscore');
 var assert = require('assert');
 var sysrev = require('../../lib/sysrev/sysrev')({systemsRoot: '/tmp/nfd/systems'});
 var CONTAINER_DEF = { 'name': 'test',
@@ -44,7 +45,10 @@ var CONTAINER_ADD_DEF = { 'name': 'testing2',
 describe('sysrev test', function() {
 
   beforeEach(function(done) {
-    done();
+    sysrev.boot(function(err) {
+      assert(!err);
+      done();
+    });
   });
 
 
@@ -56,15 +60,13 @@ describe('sysrev test', function() {
 
 
   it('should create a repository', function(done){
-    sysrev.boot(function(err) {
+    sysrev.createSystem('test', 'test', function(err, system) {
       assert(!err);
-      sysrev.createSystem('test', 'test', function(err, systemId) {
+      console.log(system.id);
+      sysrev.listRevisions(system.id, function(err, revs) {
         assert(!err);
-        sysrev.listRevisions(systemId, function(err, revs) {
-          assert(!err);
-          assert(revs);
-          done();
-        });
+        assert(revs);
+        done();
       });
     });
   });
@@ -207,6 +209,36 @@ describe('sysrev test', function() {
           });
         });
       });
+    });
+  });
+
+
+
+  it('should clone a system', function(done) {
+    this.timeout(10000000);
+    sysrev.cloneSystem('git@github.com:pelger/sudc.git', function(err) {
+      assert(!err);
+      var systems = sysrev.listSystems();
+      var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
+      assert(sudc);
+      done();
+    });
+  });
+
+
+  it('should add a remote to a system', function(done) {
+    done();
+  });
+
+
+
+  it('should sync system details', function(done) {
+    this.timeout(10000000);
+    var systems = sysrev.listSystems();
+    var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
+    sysrev.syncSystem(sudc.id, function(err) {
+      assert(!err);
+      done();
     });
   });
 });
