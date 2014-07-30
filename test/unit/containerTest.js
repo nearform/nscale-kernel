@@ -15,28 +15,47 @@
 'use strict';
 
 var assert = require('assert');
+//var container_obj = require('../../lib/container/container');
 var root = require('../../lib/container/root')({ 'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out' });
 var out = require('../../lib/util/consoleOut');
 
-
 describe('config test', function() {
-
+  
   beforeEach(function(done) {
     done();
   });
-
-
 
   afterEach(function(done) {
     done();
   });
 
-
-
   it('should deserialize the web sample configuration', function(done){
-    root.load(__dirname + '/../../../nfd-samples/web/nfd.json');
+    //root.load('./system.json', function(err) {
+    //var containers = require('./system.json');
+    root.load('./system.json');
     root.dumpContainerDefs(out);
+    //console.log(containers);
     //console.log(JSON.stringify(containers, null, 2));
+    done();
+  //});
+  });
+
+  it('should get container definition by definition id', function(done) {
+    root.load('./system.json');
+    root.containerDefByDefId(15);
+    //root.dumpContainerDefs(out);
+    done();
+  });
+
+  it('should get container def by id', function(done) {
+    root.load('./system.json');
+    root.containerDefById(15);
+    done();
+  });
+
+  it('should get container by id', function(done) {
+    root.load('./system.json');
+    root.containerById(15);
     done();
   });
 });

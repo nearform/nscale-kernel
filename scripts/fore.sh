@@ -15,6 +15,9 @@ nohup forever server.js > ../log/nfd-api.log 2>&1 &
 cd ../nfd-web
 nohup forever server.js > ../log/web.log 2>&1 &
 
+cd ../nfd-mobile
+nohup forever app.js > ../log/mobile.log 2>&1 &
+
 ps aux | grep -i node
-tail -f ../../log/*
+tail -f ../log/*
 

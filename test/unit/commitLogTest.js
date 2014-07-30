@@ -41,7 +41,69 @@ describe('commit test', function() {
     });
   });
 
+  it('should get next revision number to label docker container', function(done) {
+    var sys = require('./system.json');
+    cl.nextRevisionNo(sys.id, function(err) {
+      console.log(err);
+      done();
+    });
+  });
 
+  it('should get a revision from the history', function(done) {
+    var sys = require('./system.json');
+    cl.getRevision(sys.id, '1', function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  it('should get a revision from the history, if no version number is specified get the head', function(done) {
+    var sys = require('./system.json');
+    cl.getRevision(sys.id,'', function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  it('should set the currently deployed version and clear the currently deployed flag and set the deployed flag against the specified revision', function(done) {
+    var sys = require('./system.json');
+    cl.markDeployedRevision(sys.id, '1', function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  it('should set the currently deployed revision to head', function(done) {
+    var sys = require('./system.json');
+    cl.markHeadDeployed(sys.id, function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  it('should get the currently deployed version', function(done) {
+    var sys = require('./system.json');
+    cl.getDeployedRevision(sys.id, function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  it('should find revision by long or short guid', function(done) {
+    var sys = require('./system.json');
+    cl.findRevision(sys.id, '12345678-9d00-4a23-a268-b75abb109dc6', function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  it('should convert id', function(done) {
+    var sys = require('./system.json');
+    cl.convertId(sys.id, '15', function(err) {
+      console.log(err);
+      done();
+    });
+  });
 
   it('should list revisions', function(done) {
     var sys = require('./system.json');

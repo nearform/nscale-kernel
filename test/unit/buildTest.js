@@ -19,28 +19,22 @@ var root = require('../../lib/container/root')({'apiPort': '8010', 'buildRoot': 
 var builder = require('../../lib/container/build/builder')({'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out'});
 var out = require('../../lib/util/consoleOut');
 
-
-
 describe('config test', function() {
 
   beforeEach(function(done) {
     done();
   });
 
-
-
   afterEach(function(done) {
     done();
   });
 
-
-
   it('should build the nginx sample container', function(done){
     this.timeout(1000000);
     root.load(__dirname + '/../../../nfd-samples/web/nfd.json');
-
+  
     var nginx = root.containerDefByDefId('3');
-    builder.build(nginx, out, function(err, result) {
+    builder.build(nginx, nginx, out, function(err, result) {
       //nginx.build(out, function(err, result) {
       console.log(err);
       console.log(result);
@@ -49,7 +43,14 @@ describe('config test', function() {
     });
   });
 
+  //it('should read version', function(done) {
+  //  root.load(__dirname + '/../../../nfd-samples/web/nfd.json'); 
+  //  done();
+  //});
 
+
+
+  
 
   /*
   it('should build the example app container', function(done){
