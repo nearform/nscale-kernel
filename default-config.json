@@ -1,0 +1,9 @@
+{
+  "port": "8010",
+  "systemsRoot": "/tmp/nfd/systems",
+  "buildRoot": "/tmp/nfd",
+  "targetRoot": "/tmp/nfd/out",
+  "dbConnection": "nfd",
+  "repositoryHost": "10.75.23.138"
+}
+

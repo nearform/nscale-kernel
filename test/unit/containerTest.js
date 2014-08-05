@@ -15,13 +15,16 @@
 'use strict';
 
 var assert = require('assert');
-//var container_obj = require('../../lib/container/container');
 var root = require('../../lib/container/root')({ 'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out' });
 var out = require('../../lib/util/consoleOut');
 
 describe('config test', function() {
+  var count = 0;
   
   beforeEach(function(done) {
+    out.stdout = function() {
+      count = count + 1;
+    };
     done();
   });
 
@@ -30,34 +33,31 @@ describe('config test', function() {
   });
 
   it('should deserialize the web sample configuration', function(done){
-    //root.load('./system.json', function(err) {
-    //var containers = require('./system.json');
-    root.load('./system.json');
+    root.load(require('./system.json'));
     root.dumpContainerDefs(out);
-    //console.log(containers);
-    //console.log(JSON.stringify(containers, null, 2));
+    assert(count === 5);
     done();
-  //});
   });
 
   it('should get container definition by definition id', function(done) {
-    root.load('./system.json');
-    root.containerDefByDefId(15);
-    //root.dumpContainerDefs(out);
+    root.load(require('./system.json'));
+    var c = root.containerDefByDefId('4');
+    assert(c.name === 'node-1');
     done();
   });
 
   it('should get container def by id', function(done) {
-    root.load('./system.json');
-    root.containerDefById(15);
+    root.load(require('./system.json'));
+    var c = root.containerDefById('34');
+    assert(c.name === 'node-1');
     done();
   });
 
   it('should get container by id', function(done) {
-    root.load('./system.json');
-    root.containerById(15);
+    root.load(require('./system.json'));
+    var c = root.containerById('34');
+    assert(c.containerDefinitionId = '4');
     done();
   });
 });
-
 

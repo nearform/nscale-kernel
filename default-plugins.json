@@ -1,0 +1,15 @@
+{
+  "analyzers": {
+    "path": "",
+    "load":["", ""]
+  },
+  "builders":: {
+    "path": "",
+    "load":["", ""]
+  },
+  "deployers": {
+    "path": "",
+    "load":["", ""]
+  }
+}
+

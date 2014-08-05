@@ -41,6 +41,9 @@ var CONTAINER_ADD_DEF = { 'name': 'testing2',
                           },
                           'version': '0.1.0',
                           'id': '88888888-150d-42fb-8151-da6b08fa7ce7' };
+var user = { name: 'test', email: 'test@test.com' };
+
+
 
 describe('sysrev test', function() {
 
@@ -60,9 +63,8 @@ describe('sysrev test', function() {
 
 
   it('should create a repository', function(done){
-    sysrev.createSystem('test', 'test', function(err, system) {
+    sysrev.createSystem(user, 'test', 'test', function(err, system) {
       assert(!err);
-      console.log(system.id);
       sysrev.listRevisions(system.id, function(err, revs) {
         assert(!err);
         assert(revs);
@@ -92,7 +94,7 @@ describe('sysrev test', function() {
       assert(!err);
       sysrev.getRevision(sysId, revs[0].id, function(err, json) {
         json.containerDefinitions.push(CONTAINER_DEF);
-        sysrev.commitRevision(sysId, 'added container def', json, function() {
+        sysrev.commitRevision(user, sysId, 'added container def', json, function() {
           sysrev.listRevisions(sysId, function(err, revs) {
             sysrev.getRevision(sysId, revs[0].id, function(err, json) {
               assert(!err);
@@ -126,7 +128,7 @@ describe('sysrev test', function() {
     var sysId = sysrev.sid('test', 'test');
     sysrev.listRevisions(sysId, function(err, revs) {
       assert(!err);
-      sysrev.markDeployedRevision(sysId, revs[0].id, function(err) {
+      sysrev.markDeployedRevision(user, sysId, revs[0].id, function(err) {
         assert(!err);
         sysrev.getDeployedRevision(sysId, function(err, json) {
           assert(!err);
@@ -186,18 +188,18 @@ describe('sysrev test', function() {
     sysrev.getHead(systems[0].id, function(err, head) {
       assert(!err);
       count = parseInt(head.containerDefinitions.length, 10);
-      sysrev.addContainer(systems[0].id, CONTAINER_ADD_DEF, function(err) {
+      sysrev.addContainer(user, systems[0].id, CONTAINER_ADD_DEF, function(err) {
         assert(!err);
         sysrev.getHead(systems[0].id, function(err, head) {
           assert(!err);
           assert(head.containerDefinitions.length === count + 1);
           CONTAINER_ADD_DEF.version = '0.2.0';
-          sysrev.putContainer(systems[0].id, CONTAINER_ADD_DEF, function(err) { 
+          sysrev.putContainer(user, systems[0].id, CONTAINER_ADD_DEF, function(err) { 
             assert(!err);
             sysrev.getHead(systems[0].id, function(err, head) {
               assert(!err);
               assert(head.containerDefinitions.length === count + 1);
-              sysrev.deleteContainer(systems[0].id, CONTAINER_ADD_DEF.id, function(err) {
+              sysrev.deleteContainer(user, systems[0].id, CONTAINER_ADD_DEF.id, function(err) {
                 assert(!err);
                 sysrev.getHead(systems[0].id, function(err, head) {
                   assert(!err);
@@ -214,9 +216,10 @@ describe('sysrev test', function() {
 
 
 
+/*
   it('should clone a system', function(done) {
     this.timeout(10000000);
-    sysrev.cloneSystem('git@github.com:pelger/sudc.git', function(err) {
+    sysrev.cloneSystem(user, 'git@github.com:pelger/sudc.git', function(err) {
       assert(!err);
       var systems = sysrev.listSystems();
       var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
@@ -224,6 +227,7 @@ describe('sysrev test', function() {
       done();
     });
   });
+
 
 
   it('should add a remote to a system', function(done) {
@@ -241,5 +245,6 @@ describe('sysrev test', function() {
       done();
     });
   });
+*/
 });
 

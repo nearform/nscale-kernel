@@ -36,7 +36,8 @@ describe('semver test', function() {
   it('should return true for correct dependencies', function(done){
     var data = require('../data/sysdef.json');
     var result = sv.check(data);
-    console.log(JSON.stringify(result, null, 2));
+    assert(result.check === true);
+    assert(result.results[0].result === true);
     done();
   });
 
