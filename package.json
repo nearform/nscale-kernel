@@ -23,7 +23,7 @@
     "fs-extra": "~0.8.1",
     "gift": "^0.4.2",
     "mongojs": "~0.13.0",
-    "nfd-planner": "git+ssh://git@github.com:nearform/nfd-planner.git#v0.0.3",
+    "nfd-planner": "git+ssh://git@github.com:nearform/nfd-planner.git#v0.0.5",
     "nodegit": "^0.1.4",
     "rus-diff": "0.0.6",
     "scp2": "^0.1.4",
