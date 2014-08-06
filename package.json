@@ -24,6 +24,7 @@
     "gift": "^0.4.2",
     "mongojs": "~0.13.0",
     "nfd-planner": "git+ssh://git@github.com:nearform/nfd-planner.git#v0.0.5",
+    "nfd-protocol": "git+ssh://git@github.com:nearform/nfd-protocol.git",
     "nodegit": "^0.1.4",
     "rus-diff": "0.0.6",
     "scp2": "^0.1.4",
