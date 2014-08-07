@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 /*
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -18,16 +20,22 @@
 
 'use strict';
 
-var srv = require('../../nfd-protocol');
-var loader = require('./loader');
-var opts = require('yargs').argv;
-var config = require(opts.config);
-//var plugins = require(opts.plugins);
+var opts = require('yargs')
+            .usage('Usage: $0 --config="config file" --plugins="plugins file"')
+            .alias('c', 'config')
+            .alias('P', 'plugins')
+            .demand(['c'])
+            .argv
+
+var path = require('path')
+var srv = require('nfd-protocol');
+var loader = require('../lib/loader');
+var config = require(path.resolve(opts.config));
 
 console.log('loading...');
 loader.boot(config, null, function(err, sysrev) {
   console.log('starting server...');
-  var api = require('./api')(config, sysrev);
+  var api = require('../lib/api')(config, sysrev);
   srv(api);
 });
 

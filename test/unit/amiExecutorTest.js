@@ -16,7 +16,7 @@
 
 var executor = require('../../lib/topology/deploy/executor/aws/amiExecutor')();
 var connection = { write: function(str) { console.log(str); } };
-var out = require('../../../nfd-protocol/lib/networkOut')(connection, null);
+var out = require('nfd-protocol/lib/networkOut')(connection, null);
 
 var TARGET_HOST = null;
 

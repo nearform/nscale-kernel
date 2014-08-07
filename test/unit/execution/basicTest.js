@@ -17,9 +17,7 @@
 var planner = require('nfd-planner');
 var deployer = require('../../../lib/topology/deploy/deployer')();
 var connection = { write: function(str) { console.log(str); } };
-var out = require('../../../../nfd-protocol/lib/networkOut')(connection, null);
-
-
+var out = require('nfd-protocol/lib/networkOut')(connection, null);
 
 describe('config test', function() {
 
