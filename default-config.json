@@ -4,6 +4,17 @@
   "buildRoot": "/tmp/nfd",
   "targetRoot": "/tmp/nfd/out",
   "dbConnection": "nfd",
-  "repositoryHost": "10.75.23.138"
+  "repositoryHost": "10.75.23.138",
+  "analyzer": {
+    "accessKeyId": "AKIAJ2PCJ2RYKEOXTJNA",
+    "secretAccessKey": "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",
+    "region": "eu-west-1",
+    "user": "ubuntu",
+    "identityFile": "/home/ubuntu/nfd.pem",
+    "name": "sudc",
+    "namespace": "sudc",
+    "systemId": "12341234213432143",
+    "instanceFilter": "nfd-id",
+    "dockerFilters": ["web", "doc-srv", "real-srv", "hist-srv"]}
 }
 
