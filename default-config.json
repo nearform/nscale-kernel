@@ -6,8 +6,8 @@
   "dbConnection": "nfd",
   "repositoryHost": "10.75.23.138",
   "analyzer": {
-    "accessKeyId": "AKIAJ2PCJ2RYKEOXTJNA",
-    "secretAccessKey": "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",
+    "accessKeyId": "AKIAJNTAM7C5LDMMUZWQ",
+    "secretAccessKey": "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",
     "region": "eu-west-1",
     "user": "ubuntu",
     "identityFile": "/home/ubuntu/nfd.pem",
