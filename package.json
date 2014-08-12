@@ -24,7 +24,7 @@
     "gift": "^0.4.2",
     "mongojs": "~0.13.0",
     "nfd-auth": "git+ssh://git@github.com:nearform/nfd-auth.git",
-    "nfd-planner": "git+ssh://git@github.com:nearform/nfd-planner.git#v0.0.5",
+    "nfd-planner": "git+ssh://git@github.com:nearform/nfd-planner.git#v0.0.6",
     "nfd-protocol": "git+ssh://git@github.com:nearform/nfd-protocol.git",
     "nfd-protocol": "git+ssh://git@github.com:nearform/nfd-aws-analyzer.git",
     "nodegit": "^0.1.4",
