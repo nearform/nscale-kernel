@@ -31,11 +31,13 @@ var path = require('path')
 var srv = require('nfd-protocol');
 var loader = require('../lib/loader');
 var config = require(path.resolve(opts.config));
+var auth = require('nfd-auth')();
+var logger = require('bunyan').createLogger({ name: 'nfd-kernel' });
 
 console.log('loading...');
 loader.boot(config, null, function(err, sysrev) {
   console.log('starting server...');
   var api = require('../lib/api')(config, sysrev);
-  srv(api);
+  srv(api, auth, logger).start();
 });
 
