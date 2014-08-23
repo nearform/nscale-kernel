@@ -3,8 +3,8 @@
 
 killall node
 
-cd ../lib
-nohup forever main.js > ../../log/nfd-kernel.log 2>&1 &
+cd ../bin
+nohup forever nfd-kernel.js --config ../default-config.json > ../../log/nfd-kernel.log 2>&1 &
 
 cd ../../nfd-api
 nohup forever server.js > ../log/nfd-api.log 2>&1 &
