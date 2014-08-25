@@ -26,6 +26,7 @@
     "mongojs": "~0.13.0",
     "nfd-analyzer": "git+ssh://git@github.com:nearform/nfd-aws-analyzer.git",
     "nfd-auth": "git+ssh://git@github.com:nearform/nfd-auth.git",
+    "nfd-noauth": "git+ssh://git@github.com:nearform/nfd-noauth.git",
     "nfd-planner": "git+ssh://git@github.com:nearform/nfd-planner.git#v0.0.6",
     "nfd-protocol": "git+ssh://git@github.com:nearform/nfd-protocol.git#v0.0.5",
     "nodegit": "^0.1.4",
@@ -38,6 +39,12 @@
     "winston": "~0.7.3",
     "wrench": "~1.5.8",
     "yargs": "^1.3.1"
+    "aws-ami-container": "git+ssh://git@github.com:nearform/nfd-std-containers.git#v0.0.1",
+    "aws-elb-container": "git+ssh://git@github.com:nearform/nfd-std-containers.git#v0.0.1",
+    "b2d-vb-container": "git+ssh://git@github.com:nearform/nfd-std-containers.git#v0.0.1",
+    "blank-container": "git+ssh://git@github.com:nearform/nfd-std-containers.git#v0.0.1",
+    "docker-container": "git+ssh://git@github.com:nearform/nfd-std-containers.git#v0.0.1",
+    "process-container": "git+ssh://git@github.com:nearform/nfd-std-containers.git#v0.0.1",
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,46 @@
+{
+  "kernel": {
+    "port": "8010",
+    "systemsRoot": "/Users/pelger/work/nearform/code/product/nfddata/systems",
+    "buildRoot": "/Users/pelger/work/nearform/code/product/nfddata/build",
+    "targetRoot": "/Users/pelger/work/nearform/code/product/nfddata/targets"
+  },
+  "modules": {
+    "protocol": {
+      "require": "nfd-protocol",
+      "specific": {
+      }
+    },
+    "authorization": {
+      "require": "nfd-noauth",
+      "specific": {
+        "credentialsPath": "/Users/pelger/work/nearform/code/product/nfddata"
+      }
+    },
+    "analysis": {
+      "require": "nfd-aws-analyzer",
+      "specific": {
+        "accessKeyId": "AKIAJNTAM7C5LDMMUZWQ",
+        "secretAccessKey": "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",
+        "region": "eu-west-1",
+        "user": "ubuntu",
+        "identityFile": "/home/ubuntu/nfd.pem",
+        "name": "sudc",
+        "namespace": "sudc",
+        "systemId": "12341234213432143",
+        "instanceFilter": "nfd-id",
+        "dockerFilters": ["web", "doc-srv", "real-srv", "hist-srv"]}
+      }
+  },
+  "containers": [
+    {"require": "aws-elb-container",
+     "type": "aws-elb",
+     "specific": {}},
+    {"require": "aws-ami-container",
+     "type": "aws-ami",
+     "specific": {}},
+    {"require": "docker-container",
+     "type": "docker",
+     "specific": {}}]
+}
+

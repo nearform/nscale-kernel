@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-
 /*
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -13,31 +12,24 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-/*
- * nfd kernel
- * node nfd-kernel.js --config='config file' --plugins='plugins file'
- */
 
 'use strict';
 
+var path = require('path');
 var opts = require('yargs')
-            .usage('Usage: $0 --config="config file" --plugins="plugins file"')
+            .usage('Usage: $0 --config="config file" --test')
             .alias('c', 'config')
-            .alias('P', 'plugins')
+            .alias('t', 'test')
             .demand(['c'])
-            .argv
+            .argv;
 
-var path = require('path')
-var srv = require('nfd-protocol');
-var loader = require('../lib/loader');
-var config = require(path.resolve(opts.config));
-var auth = require('nfd-auth')();
 var logger = require('bunyan').createLogger({ name: 'nfd-kernel' });
+var config = require(path.resolve(opts.config));
+var kernel = require('../lib/kernel');
 
-console.log('loading...');
-loader.boot(config, null, function(err, sysrev) {
-  console.log('starting server...');
-  var api = require('../lib/api')(config, sysrev);
-  srv(api, auth, logger).start();
+config.test = opts.test;
+logger.info('booting');
+kernel.boot(config, function(err) {
+  logger.info('shutdown');
 });
 

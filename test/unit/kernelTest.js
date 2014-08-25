@@ -14,23 +14,34 @@
 
 'use strict';
 
-var sysrev = require('./sysrev/sysrev')({systemsRoot: '/tmp/nfd/systems'});
-//var pluginLoader = require('./lib/plugins/loader');
+var assert = require('assert');
 
 
 
-/**
- * kernel loader
- */
-exports.boot = function(config, plugins, cb) {
-  debugger;
-  sysrev = require('./sysrev/sysrev')({systemsRoot: config.systemsRoot});
-  sysrev.boot(function(err) {
-    debugger;
-    if (err) { return cb(err); }
-//    pluginLoader.load(function(err) {
-      cb(err, sysrev);
-//    });
+describe('kernel load test', function() {
+
+  it('should load the kernel on a good config', function(done){
+    var config = require('../data/basic-config');
+    var kernel = require('../../lib/kernel');
+    config.test = true;
+    kernel.boot(config, function(err) {
+      assert(!err);
+      done();
+    });
   });
-};
+
+
+  /*
+  it('should fail to load a bad config', function(done){
+    var config = require('../data/broken-config');
+    var kernel = require('../../lib/kernel');
+    config.test = true;
+    kernel.boot(config, function(err) {
+      assert(err);
+      done();
+    });
+  });
+  */
+});
+
 
