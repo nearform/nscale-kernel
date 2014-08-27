@@ -35,12 +35,18 @@
   "containers": [
     {"require": "aws-elb-container",
      "type": "aws-elb",
-     "specific": {}},
+     "specific": { "region": "eu-west-1" }},
     {"require": "aws-ami-container",
      "type": "aws-ami",
+     "specific": { "region": "eu-west-1" }},
+    {"require": "virtualbox-container",
+     "type": "virtualbox",
      "specific": {}},
     {"require": "docker-container",
      "type": "docker",
-     "specific": {}}]
+     "specific": {"imageCachePath": "/Users/pelger/tmp"}},
+    {"require": "boot2docker-container",
+     "type": "boot2docker",
+     "specific": {"imageCachePath": "/Users/pelger/tmp"}}]
 }
 
