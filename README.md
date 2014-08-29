@@ -1,4 +1,8 @@
-# nfd-kernel
+# nscale-kernel
 
-## Kernel
+The daemon of [nscale](http://github.com/nearform/nscale).
 
+License
+-------
+
+Artistic License 2.0
