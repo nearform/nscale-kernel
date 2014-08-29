@@ -1,24 +1,24 @@
 {
   "kernel": {
     "port": "8010",
-    "systemsRoot": "/Users/pelger/work/nearform/code/product/nfddata/systems",
-    "buildRoot": "/Users/pelger/work/nearform/code/product/nfddata/build",
-    "targetRoot": "/Users/pelger/work/nearform/code/product/nfddata/targets"
+    "systemsRoot": "./data/systems",
+    "buildRoot": "./data/build",
+    "targetRoot": "./data/targets"
   },
   "modules": {
     "protocol": {
-      "require": "nfd-protocol",
+      "require": "nscale-protocol",
       "specific": {
       }
     },
     "authorization": {
-      "require": "nfd-noauth",
+      "require": "nscale-noauth",
       "specific": {
-        "credentialsPath": "/Users/pelger/work/nearform/code/product/nfddata"
+        "credentialsPath": "./data"
       }
     },
     "analysis": {
-      "require": "nfd-boot2docker-analyzer",
+      "require": "nscale-boot2docker-analyzer",
       "specific": {
         "name": "nfddemo",
         "namespace": "nfddemo",
@@ -39,9 +39,9 @@
      "specific": {}},
     {"require": "docker-container",
      "type": "docker",
-     "specific": {"imageCachePath": "/Users/pelger/tmp"}},
+     "specific": {"imageCachePath": "/tmp"}},
     {"require": "boot2docker-container",
      "type": "boot2docker",
-     "specific": {"imageCachePath": "/Users/pelger/tmp"}}]
+     "specific": {"imageCachePath": "/tmp"}}]
 }
 
