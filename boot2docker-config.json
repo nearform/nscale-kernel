@@ -18,19 +18,14 @@
       }
     },
     "analysis": {
-      "require": "nfd-aws-analyzer",
+      "require": "nfd-boot2docker-analyzer",
       "specific": {
-        "accessKeyId": "AKIAJNTAM7C5LDMMUZWQ",
-        "secretAccessKey": "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",
-        "region": "eu-west-1",
-        "user": "ubuntu",
-        "identityFile": "/home/ubuntu/nfd.pem",
-        "name": "sudc",
-        "namespace": "sudc",
+        "name": "nfddemo",
+        "namespace": "nfddemo",
         "systemId": "12341234213432143",
-        "instanceFilter": "nfd-id",
-        "dockerFilters": ["web", "doc-srv", "real-srv", "hist-srv"]}
+        "dockerFilters": ["web"]
       }
+    }
   },
   "containers": [
     {"require": "aws-elb-container",
