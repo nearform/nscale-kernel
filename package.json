@@ -32,7 +32,7 @@
     "nscale-noauth": "~0.1.0",
     "nscale-planner": "~0.1.1",
     "nscale-protocol": "~0.1.0",
-    "nscale-util": "^0.1.0",
+    "nscale-util": "^0.1.1",
     "semver": "^2.3.0",
     "underscore": "~1.6.0",
     "uuid": "~1.4.1",
