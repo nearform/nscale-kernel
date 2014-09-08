@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "Artistic License 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
@@ -21,9 +21,9 @@
     "aws-ami-container": "~0.1.1",
     "aws-elb-container": "~0.1.1",
     "blank-container": "~0.1.0",
-    "boot2docker-container": "~0.1.4",
+    "boot2docker-container": "~0.1.5",
     "bunyan": "^1.0.0",
-    "docker-container": "~0.1.5",
+    "docker-container": "~0.1.6",
     "fs-extra": "~0.8.1",
     "gift": "^0.4.2",
     "nodegit": "^0.1.4",
