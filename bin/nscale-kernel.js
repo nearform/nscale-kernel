@@ -29,7 +29,7 @@ var kernelScript = path.resolve(__dirname, '../bin/nscale-kernel-boot.js');
 
 var child = new (forever.Monitor)(kernelScript, {
   max: 3,
-  silent: true,
+  silent: false,
   options: ['-c', opts.config]
 });
 
