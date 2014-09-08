@@ -15,7 +15,9 @@
 
 'use strict';
 
-var path = require('path');
+var forever = require('forever-monitor'),
+		path 		= require('path');
+
 var opts = require('yargs')
             .usage('Usage: $0 --config="config file" --test')
             .alias('c', 'config')
@@ -23,13 +25,16 @@ var opts = require('yargs')
             .demand(['c'])
             .argv;
 
-var logger = require('bunyan').createLogger({ name: 'nfd-kernel' });
-var config = require(path.resolve(opts.config));
-var kernel = require('../lib/kernel');
+var kernelScript = path.resolve(__dirname, '../bin/nscale-kernel-boot.js');
 
-config.test = opts.test;
-logger.info('booting');
-kernel.boot(config, function(err) {
-  logger.info('shutdown');
+var child = new (forever.Monitor)(kernelScript, {
+  max: 3,
+  silent: false,
+  options: ['-c', opts.config]
 });
 
+child.on('exit', function () {
+  console.log('nscale kernel has exited after 3 restarts');
+});
+
+child.start();
