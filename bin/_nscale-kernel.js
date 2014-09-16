@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
 /*
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -16,12 +16,20 @@
 'use strict';
 
 var path = require('path');
-var spawn = require('child_process').spawn;
-spawn(
-  process.execPath,
-  [
-    '--abort_on_uncaught_exception',
-    path.join(__dirname, '_nscale-kernel.js')
-  ].concat(process.argv.slice(2)),
-  { stdio: 'inherit' }
-);
+var opts = require('yargs')
+            .usage('Usage: $0 --config="config file" --test')
+            .alias('c', 'config')
+            .alias('t', 'test')
+            .demand(['c'])
+            .argv;
+
+var logger = require('bunyan').createLogger({ name: 'nfd-kernel' });
+var config = require(path.resolve(opts.config));
+var kernel = require('../lib/kernel');
+
+config.test = opts.test;
+logger.info('booting');
+kernel.boot(config, function(err) {
+  logger.info('shutdown');
+});
+
