@@ -23,13 +23,11 @@ var opts = require('yargs')
             .demand(['c'])
             .argv;
 
-var logger = require('bunyan').createLogger({ name: 'nfd-kernel' });
 var config = require(path.resolve(opts.config));
 var kernel = require('../lib/kernel');
 
-config.logger = logger;
 config.test = opts.test;
-logger.info('booting');
+
 kernel.boot(config, function(err) {
   logger.info('shutdown');
 });
