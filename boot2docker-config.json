@@ -5,7 +5,6 @@
     "buildRoot": "./data/build",
     "targetRoot": "./data/targets",
     "logger": {
-      "name": "hello world",
       "level": "debug"
     }
   },
