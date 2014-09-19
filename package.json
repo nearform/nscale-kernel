@@ -27,6 +27,7 @@
     "forever-monitor": "^1.3.0",
     "fs-extra": "~0.8.1",
     "gift": "^0.4.2",
+    "lodash": "^2.4.1",
     "nodegit": "^0.1.4",
     "nscale-aws-analyzer": "~0.1.1",
     "nscale-boot2docker-analyzer": "^0.1.3",
