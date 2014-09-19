@@ -3,7 +3,10 @@
     "port": "8010",
     "systemsRoot": "./data/systems",
     "buildRoot": "./data/build",
-    "targetRoot": "./data/targets"
+    "targetRoot": "./data/targets",
+    "logger": {
+      "level": "debug"
+    }
   },
   "modules": {
     "protocol": {
