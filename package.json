@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "Artistic License 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
@@ -33,7 +33,7 @@
     "nscale-noauth": "~0.2.0",
     "nscale-planner": "~0.1.1",
     "nscale-protocol": "~0.2.0",
-    "nscale-util": "~0.3.1",
+    "nscale-util": "~0.3.2",
     "semver": "^2.3.0",
     "uuid": "~1.4.1",
     "wrench": "~1.5.8",
