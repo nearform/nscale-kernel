@@ -22,7 +22,7 @@
     "aws-elb-container": "~0.3.1",
     "blank-container": "git+https://github.com/nearform/blank-container.git",
     "bunyan": "^1.0.0",
-    "docker-container": "git+https://github.com/nearform/docker-container.git",
+    "docker-container": "git+https://github.com/nearform/docker-container.git#well-known-locations",
     "forever-monitor": "^1.3.0",
     "fs-extra": "~0.8.1",
     "gift": "^0.4.2",
