@@ -15,27 +15,10 @@
 'use strict';
 
 var assert = require('assert');
-var root = require('../../lib/container/root')({ 'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out' });
-var out = require('../../lib/util/consoleOut');
+var root = require('../../lib/container')();
 
-describe('config test', function() {
-  var count = 0;
-  
-  beforeEach(function(done) {
-    out.stdout = function() {
-      count = count + 1;
-    };
-    done();
-  });
-
+describe('container test', function() {
   afterEach(function(done) {
-    done();
-  });
-
-  it('should deserialize the web sample configuration', function(done){
-    root.load(require('./system.json'));
-    root.dumpContainerDefs(out);
-    assert(count === 5);
     done();
   });
 
