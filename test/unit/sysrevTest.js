@@ -14,7 +14,7 @@
 
 'use strict';
 
-var _ = require('underscore');
+var _ = require('lodash');
 var assert = require('assert');
 var sysrev = require('../../lib/sysrev/sysrev')({systemsRoot: '/tmp/nfd/systems'});
 var CONTAINER_DEF = { 'name': 'test',
