@@ -14,9 +14,9 @@
 
 'use strict';
 
-var _ = require('lodash');
 var assert = require('assert');
-var sysrev = require('../../lib/sysrev/sysrev')({systemsRoot: '/tmp/nfd/systems'});
+var Sysrev = require('../../lib/sysrev/sysrev');
+var getTmpDir = require('../helpers/get-tmp-dir');
 var CONTAINER_DEF = { 'name': 'test',
                       'type': 'docker',
                       'specific': {
@@ -42,11 +42,12 @@ var CONTAINER_ADD_DEF = { 'name': 'testing2',
                           'version': '0.1.0',
                           'id': '88888888-150d-42fb-8151-da6b08fa7ce7' };
 var user = { name: 'test', email: 'test@test.com' };
+var tmpDir = getTmpDir();
+var sysrev = new Sysrev({ systemsRoot: tmpDir });
 
 
 
 describe('sysrev test', function() {
-
   beforeEach(function(done) {
     sysrev.boot(function(err) {
       assert(!err);
@@ -63,7 +64,7 @@ describe('sysrev test', function() {
 
 
   it('should create a repository', function(done){
-    sysrev.createSystem(user, 'test', 'test', function(err, system) {
+    sysrev.createSystem(user, 'test', 'test', tmpDir, function(err, system) {
       assert(!err);
       sysrev.listRevisions(system.id, function(err, revs) {
         assert(!err);
@@ -144,7 +145,8 @@ describe('sysrev test', function() {
   it('should list the available systems', function(done){
     var systems = sysrev.listSystems();
     assert(systems);
-    assert(systems[0].name === 'test_test');
+    assert.equal(systems.length, 1);
+    assert.equal(systems[0].name, 'test');
     done();
   });
 
