@@ -15,14 +15,11 @@
 'use strict';
 
 var path = require('path');
-var getTmpDir = require('./get-tmp-dir');
+var fse = require('fs-extra');
+var uuid = require('uuid').v1;
 
-module.exports = function(config, tmpDir) {
-  tmpDir = getTmpDir(tmpDir);
-  ['systemsRoot', 'buildRoot', 'targetRoot'].forEach(function(root) {
-    config.kernel[root] = path.resolve(tmpDir, config.kernel[root]);
-  });
-  config.modules.authorization.specific.credentialsPath =
-    path.resolve(tmpDir, config.modules.authorization.specific.credentialsPath);
-  return config;
+module.exports = function(path_) {
+  var tmpDir = path_ || path.join(__dirname, '..', 'tmp', uuid());
+  fse.mkdirpSync(tmpDir);
+  return tmpDir;
 };
