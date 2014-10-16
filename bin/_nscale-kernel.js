@@ -24,11 +24,11 @@ var opts = require('yargs')
             .argv;
 
 var config = require(path.resolve(opts.config));
-var kernel = require('../lib/kernel');
+var Kernel = require('../lib/kernel');
 
 config.test = opts.test;
 
-kernel.boot(config, function(err) {
-  logger.info('shutdown');
+var kernel = new Kernel(config, function(err) {
+  if (err) { throw err; }
+  kernel.start();
 });
-
