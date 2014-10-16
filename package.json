@@ -47,11 +47,8 @@
     "url": "https://github.com/pelger/nfd-kernel.git"
   },
   "devDependencies": {
-    "gulp": "^3.8.7",
-    "gulp-istanbul": "^0.2.1",
-    "gulp-jshint": "^1.8.4",
-    "gulp-mocha": "^0.5.2",
-    "gulp-util": "^3.0.0",
+    "jshint": "^2.5.6",
+    "mocha": "^1.21.5",
     "through": "^2.3.4"
   },
   "bin": {
@@ -59,6 +56,8 @@
     "nsd-kernel": "bin/nscale-kernel.js"
   },
   "scripts": {
-    "test": "gulp coverage"
+    "lint": "jshint lib/**/*.js test/**/*.js",
+    "test-no-coverage": "mocha test/unit/*Test.js",
+    "test": "npm run lint; npm run test-no-coverage"
   }
 }
