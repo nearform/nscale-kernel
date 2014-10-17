@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.5.0",
+  "version": "0.5.1",
   "license": "Artistic License 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
@@ -31,7 +31,7 @@
     "nodegit": "^0.1.4",
     "nscale-aws-analyzer": "~0.4.1",
     "nscale-compiler": "~0.1.0",
-    "nscale-local-analyzer": "~0.4.0",
+    "nscale-local-analyzer": "~0.4.1",
     "nscale-noauth": "~0.2.0",
     "nscale-planner": "~0.1.1",
     "nscale-protocol": "~0.3.0",
