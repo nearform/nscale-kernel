@@ -238,35 +238,4 @@ describe('sysrev test', function() {
       done();
     });
   });
-/*
-  it('should clone a system', function(done) {
-    this.timeout(10000000);
-    sysrev.cloneSystem(user, 'git@github.com:pelger/sudc.git', function(err) {
-      assert(!err);
-      var systems = sysrev.listSystems();
-      var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
-      assert(sudc);
-      done();
-    });
-  });
-
-
-
-  it('should add a remote to a system', function(done) {
-    done();
-  });
-
-
-
-  it('should sync system details', function(done) {
-    this.timeout(10000000);
-    var systems = sysrev.listSystems();
-    var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
-    sysrev.syncSystem(sudc.id, function(err) {
-      assert(!err);
-      done();
-    });
-  });
-*/
 });
-
