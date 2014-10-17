@@ -14,38 +14,14 @@
 
 'use strict';
 
-var assert = require('assert');
-var sv = require('../../lib/topology/deploy/semver')();
+module.exports = function(logger) {
+  function log(arg) {
+    logger.info(arg);
+  }
 
-
-
-describe('semver test', function() {
-
-  beforeEach(function(done) {
-    done();
-  });
-
-
-
-  afterEach(function(done) {
-    done();
-  });
-
-
-
-  it('should return true for correct dependencies', function(done){
-    var data = require('../data/sysdef.json');
-    var result = sv.check(data);
-    assert(result.check === true);
-    assert(result.results[0].result === true);
-    done();
-  });
-
-
-
-  it('should return false for invalid dependencies', function(done){
-    done();
-  });
-});
-
-
+  return {
+    progress: log,
+    stdout: log,
+    stderr: log
+  };
+};

@@ -14,12 +14,18 @@
 
 'use strict';
 
+var _ = require('lodash');
 var assert = require('assert');
-var root = require('../../lib/container/root')({'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out'});
-var builder = require('../../lib/container/build/builder')({'apiPort': '8010', 'buildRoot': '/tmp/nfd', 'targetRoot': '/tmp/nfd/out'});
-var out = require('../../lib/util/consoleOut');
+var logger = require('bunyan').createLogger({ name: 'build-test' });
+var out = require('nscale-util/lib/consoleOut');
+var root = require('../../lib/container')();
+var Builder = require('../../lib/builder');
+var sysDef = require('../data/sysdef.json');
+var outMock = require('../mocks/out.js');
 
-describe('config test', function() {
+root.load(sysDef);
+
+describe('build test', function() {
 
   beforeEach(function(done) {
     done();
@@ -29,41 +35,60 @@ describe('config test', function() {
     done();
   });
 
-  it('should build the nginx sample container', function(done){
-    this.timeout(1000000);
-    root.load(__dirname + '/../../../nfd-samples/web/nfd.json');
+  it('should fail the build if there are no suitable container types', function(done) {
+    var builder = new Builder({ logger: logger }, {});
+    var cDef = root.containerDefByDefId('222409de-150d-42fb-8151-da6b08fa7ce7');
+    builder.build('live', sysDef, cDef, outMock(logger), function(err) {
+      assert(err);
+      done();
+    });
+  });
+
+  it('should call container-specific methods', function(done){
+    var buildCalled = false;
   
-    var nginx = root.containerDefByDefId('3');
-    builder.build(nginx, nginx, out, function(err, result) {
-      //nginx.build(out, function(err, result) {
-      console.log(err);
-      console.log(result);
+    var builder = new Builder({ logger: logger }, {
+      docker: {
+        build: function(mode, sysDef_, cDef_, out, cb) {
+          buildCalled = true;
+          assert.equal(mode, 'live');
+          assert.deepEqual(sysDef_, sysDef);
+          assert.deepEqual(cDef_, cDef);
+          cb(null);
+        }
+      }
+    });
+
+    var cDef = root.containerDefByDefId('222409de-150d-42fb-8151-da6b08fa7ce7');
+    builder.build('live', sysDef, cDef, outMock(logger), function(err) {
       assert(!err);
+      assert(buildCalled);
       done();
     });
   });
 
-  //it('should read version', function(done) {
-  //  root.load(__dirname + '/../../../nfd-samples/web/nfd.json'); 
-  //  done();
-  //});
+  it('should update topology', function(done){
+    var specific = { specific: 'data' };
+    var cDefId = '222409de-150d-42fb-8151-da6b08fa7ce7';
 
+    var builder = new Builder({ logger: logger }, {
+      docker: {
+        build: function(mode, system, cdef, out, cb) {
+          cb(null, specific);
+        }
+      }
+    });
 
+    var cDef = root.containerDefByDefId(cDefId);
+    builder.build('live', sysDef, cDef, outMock(logger), function(err) {
+      assert(!err);
 
-  
-
-  /*
-  it('should build the example app container', function(done){
-    this.timeout(1000000);
-    var heriarchy = root.deserialize(__dirname + '/../../../samples/web/web.nfd.json');
-    heriarchy['root']['sg-1234']['inst-1234']['node-1'].build(function(err, result) {
-      console.log(err);
-      console.log('-----------------');
-      console.log(JSON.stringify(result));
+      var matches = _.filter(sysDef.topology.containers, function(c) {
+        return c.containerDefinitionId === cDefId;
+      });
+      assert.equal(matches.length, 1);
+      assert.deepEqual(matches[0].specific, specific);
       done();
     });
   });
-  */
 });
-
-

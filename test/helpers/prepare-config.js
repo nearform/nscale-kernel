@@ -14,17 +14,15 @@
 
 'use strict';
 
-var assert = require('assert');
-var prepareConfig = require('../helpers/prepare-config');
-var Kernel = require('../../lib/kernel');
+var path = require('path');
+var getTmpDir = require('./get-tmp-dir');
 
-describe('kernel load test', function() {
-
-  it('should load the kernel on a good config', function(done){
-    var config = prepareConfig(require('../data/basic-config'));
-    new Kernel(config, function(err) {
-      assert(!err);
-      done();
-    });
+module.exports = function(config, tmpDir) {
+  tmpDir = getTmpDir(tmpDir);
+  ['systemsRoot', 'buildRoot', 'targetRoot'].forEach(function(root) {
+    config.kernel[root] = path.resolve(tmpDir, config.kernel[root]);
   });
-});
+  config.modules.authorization.specific.credentialsPath =
+    path.resolve(tmpDir, config.modules.authorization.specific.credentialsPath);
+  return config;
+};

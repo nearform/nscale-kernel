@@ -8,17 +8,13 @@
       {
         "name": "ELB",
         "type": "aws-elb",
-        "specific": {
-          "repositoryToken": "04551b154404a852e663aba4c3fa299e04f6e8a5"
-        },
+        "specific": {},
         "id": "3c83aa9a-2efc-43a1-a2d4-928bc43fd1cb"
       },
       {
         "name": "Machine",
         "type": "aws-ami",
-        "specific": {
-          "repositoryToken": "04551b154404a852e663aba4c3fa299e04f6e8a5"
-        },
+        "specific": {},
         "id": "74c88a1d-95c9-4374-8490-3c3dc318688b"
       },
       {

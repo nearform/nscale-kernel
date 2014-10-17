@@ -25,3 +25,6 @@ options.mine.js
 db/
 coverage
 data/
+
+test/tmp/*
+!test/tmp/.gitkeep

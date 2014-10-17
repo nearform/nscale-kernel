@@ -14,29 +14,12 @@
 
 'use strict';
 
-var docker = require('../../lib/util/docker')();
+var path = require('path');
+var fse = require('fs-extra');
+var uuid = require('uuid').v1;
 
-
-
-describe('docker test', function() {
-
-  beforeEach(function(done) {
-    done();
-  });
-
-
-
-  afterEach(function(done) {
-    done();
-  });
-
-
-
-  it('should find an image', function(done) {
-    docker.findImage('doc-srv-4', function(err, result) {
-      console.log(JSON.stringify(result, null, 2));
-      done();
-    });
-  });
-});
-
+module.exports = function(path_) {
+  var tmpDir = path_ || path.join(__dirname, '..', 'tmp', uuid());
+  fse.mkdirpSync(tmpDir);
+  return tmpDir;
+};

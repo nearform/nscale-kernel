@@ -14,9 +14,12 @@
 
 'use strict';
 
-var _ = require('underscore');
+var path = require('path');
 var assert = require('assert');
-var sysrev = require('../../lib/sysrev/sysrev')({systemsRoot: '/tmp/nfd/systems'});
+var bunyan = require('bunyan');
+var Sysrev = require('../../lib/sysrev/sysrev');
+var getTmpDir = require('../helpers/get-tmp-dir');
+
 var CONTAINER_DEF = { 'name': 'test',
                       'type': 'docker',
                       'specific': {
@@ -42,10 +45,13 @@ var CONTAINER_ADD_DEF = { 'name': 'testing2',
                           'version': '0.1.0',
                           'id': '88888888-150d-42fb-8151-da6b08fa7ce7' };
 var user = { name: 'test', email: 'test@test.com' };
+var tmpDir = getTmpDir();
+var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test' }));
 
 
 
 describe('sysrev test', function() {
+  var systemId;
 
   beforeEach(function(done) {
     sysrev.boot(function(err) {
@@ -63,8 +69,11 @@ describe('sysrev test', function() {
 
 
   it('should create a repository', function(done){
-    sysrev.createSystem(user, 'test', 'test', function(err, system) {
+    sysrev.createSystem(user, 'test', 'test', tmpDir, function(err, system) {
       assert(!err);
+
+      systemId = system.id;
+
       sysrev.listRevisions(system.id, function(err, revs) {
         assert(!err);
         assert(revs);
@@ -76,9 +85,9 @@ describe('sysrev test', function() {
 
 
   it('should get a revision', function(done){
-    sysrev.listRevisions(sysrev.sid('test', 'test'), function(err, revs) {
+    sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.getRevision(sysrev.sid('test', 'test'), revs[0].id, function(err, json) {
+      sysrev.getRevision(systemId, revs[0].id, function(err, json) {
         assert(!err);
         assert(json);
         done();
@@ -89,14 +98,13 @@ describe('sysrev test', function() {
 
 
   it('should create a new revision', function(done){
-    var sysId = sysrev.sid('test', 'test');
-    sysrev.listRevisions(sysId, function(err, revs) {
+    sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.getRevision(sysId, revs[0].id, function(err, json) {
+      sysrev.getRevision(systemId, revs[0].id, function(err, json) {
         json.containerDefinitions.push(CONTAINER_DEF);
-        sysrev.commitRevision(user, sysId, 'added container def', json, function() {
-          sysrev.listRevisions(sysId, function(err, revs) {
-            sysrev.getRevision(sysId, revs[0].id, function(err, json) {
+        sysrev.commitRevision(user, systemId, 'added container def', json, function() {
+          sysrev.listRevisions(systemId, function(err, revs) {
+            sysrev.getRevision(systemId, revs[0].id, function(err, json) {
               assert(!err);
               assert(json.name === 'test');
               assert(json.namespace === 'test');
@@ -112,8 +120,7 @@ describe('sysrev test', function() {
 
 
   it('should read the head revision correctly', function(done){
-    var sysId = sysrev.sid('test', 'test');
-    sysrev.getHead(sysId, function(err, json) {
+    sysrev.getHead(systemId, function(err, json) {
       assert(!err);
       assert(json.name === 'test');
       assert(json.namespace === 'test');
@@ -125,12 +132,11 @@ describe('sysrev test', function() {
 
 
   it('should correctly mark the deployed revision', function(done){
-    var sysId = sysrev.sid('test', 'test');
-    sysrev.listRevisions(sysId, function(err, revs) {
+    sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.markDeployedRevision(user, sysId, revs[0].id, function(err) {
+      sysrev.markDeployedRevision(user, systemId, revs[0].id, function(err) {
         assert(!err);
-        sysrev.getDeployedRevision(sysId, function(err, json) {
+        sysrev.getDeployedRevision(systemId, function(err, json) {
           assert(!err);
           assert(json);
           done();
@@ -144,7 +150,8 @@ describe('sysrev test', function() {
   it('should list the available systems', function(done){
     var systems = sysrev.listSystems();
     assert(systems);
-    assert(systems[0].name === 'test_test');
+    assert.equal(systems.length, 1);
+    assert.equal(systems[0].name, 'test');
     done();
   });
 
@@ -216,35 +223,19 @@ describe('sysrev test', function() {
 
 
 
-/*
-  it('should clone a system', function(done) {
-    this.timeout(10000000);
-    sysrev.cloneSystem(user, 'git@github.com:pelger/sudc.git', function(err) {
-      assert(!err);
-      var systems = sysrev.listSystems();
-      var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
-      assert(sudc);
+  it('should fail to link a directory with no system.json', function(done) {
+    sysrev.linkSystem(user, '.', getTmpDir(), function(err) {
+      assert(err);
       done();
     });
   });
 
 
 
-  it('should add a remote to a system', function(done) {
-    done();
-  });
-
-
-
-  it('should sync system details', function(done) {
-    this.timeout(10000000);
-    var systems = sysrev.listSystems();
-    var sudc = _.find(systems, function(system) { return system.name === 'sudc'; });
-    sysrev.syncSystem(sudc.id, function(err) {
+  it('should link a directory', function(done) {
+    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err) {
       assert(!err);
       done();
     });
   });
-*/
 });
-
