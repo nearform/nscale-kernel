@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pelger/nfd-kernel.git"
+    "url": "https://github.com/nearform/nscale-kernel.git"
   },
   "devDependencies": {
     "gulp": "^3.8.7",
