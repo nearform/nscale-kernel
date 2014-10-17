@@ -222,6 +222,12 @@ describe('sysrev test', function() {
 
 
 
+  it('should fail to link a directory with no system.json', function(done) {
+    sysrev.linkSystem(user, '.', getTmpDir(), function(err) {
+      assert(err);
+      done();
+    });
+  });
 /*
   it('should clone a system', function(done) {
     this.timeout(10000000);
