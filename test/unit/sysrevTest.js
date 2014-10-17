@@ -14,6 +14,7 @@
 
 'use strict';
 
+var path = require('path');
 var assert = require('assert');
 var bunyan = require('bunyan');
 var Sysrev = require('../../lib/sysrev/sysrev');
@@ -225,6 +226,15 @@ describe('sysrev test', function() {
   it('should fail to link a directory with no system.json', function(done) {
     sysrev.linkSystem(user, '.', getTmpDir(), function(err) {
       assert(err);
+      done();
+    });
+  });
+
+
+
+  it('should link a directory', function(done) {
+    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err) {
+      assert(!err);
       done();
     });
   });
