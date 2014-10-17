@@ -50,6 +50,8 @@ var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sy
 
 
 describe('sysrev test', function() {
+  var systemId;
+
   beforeEach(function(done) {
     sysrev.boot(function(err) {
       assert(!err);
@@ -68,6 +70,9 @@ describe('sysrev test', function() {
   it('should create a repository', function(done){
     sysrev.createSystem(user, 'test', 'test', tmpDir, function(err, system) {
       assert(!err);
+
+      systemId = system.id;
+
       sysrev.listRevisions(system.id, function(err, revs) {
         assert(!err);
         assert(revs);
@@ -79,9 +84,9 @@ describe('sysrev test', function() {
 
 
   it('should get a revision', function(done){
-    sysrev.listRevisions(sysrev.sid('test', 'test'), function(err, revs) {
+    sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.getRevision(sysrev.sid('test', 'test'), revs[0].id, function(err, json) {
+      sysrev.getRevision(systemId, revs[0].id, function(err, json) {
         assert(!err);
         assert(json);
         done();
@@ -92,14 +97,13 @@ describe('sysrev test', function() {
 
 
   it('should create a new revision', function(done){
-    var sysId = sysrev.sid('test', 'test');
-    sysrev.listRevisions(sysId, function(err, revs) {
+    sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.getRevision(sysId, revs[0].id, function(err, json) {
+      sysrev.getRevision(systemId, revs[0].id, function(err, json) {
         json.containerDefinitions.push(CONTAINER_DEF);
-        sysrev.commitRevision(user, sysId, 'added container def', json, function() {
-          sysrev.listRevisions(sysId, function(err, revs) {
-            sysrev.getRevision(sysId, revs[0].id, function(err, json) {
+        sysrev.commitRevision(user, systemId, 'added container def', json, function() {
+          sysrev.listRevisions(systemId, function(err, revs) {
+            sysrev.getRevision(systemId, revs[0].id, function(err, json) {
               assert(!err);
               assert(json.name === 'test');
               assert(json.namespace === 'test');
@@ -115,8 +119,7 @@ describe('sysrev test', function() {
 
 
   it('should read the head revision correctly', function(done){
-    var sysId = sysrev.sid('test', 'test');
-    sysrev.getHead(sysId, function(err, json) {
+    sysrev.getHead(systemId, function(err, json) {
       assert(!err);
       assert(json.name === 'test');
       assert(json.namespace === 'test');
@@ -128,12 +131,11 @@ describe('sysrev test', function() {
 
 
   it('should correctly mark the deployed revision', function(done){
-    var sysId = sysrev.sid('test', 'test');
-    sysrev.listRevisions(sysId, function(err, revs) {
+    sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.markDeployedRevision(user, sysId, revs[0].id, function(err) {
+      sysrev.markDeployedRevision(user, systemId, revs[0].id, function(err) {
         assert(!err);
-        sysrev.getDeployedRevision(sysId, function(err, json) {
+        sysrev.getDeployedRevision(systemId, function(err, json) {
           assert(!err);
           assert(json);
           done();
