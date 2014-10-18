@@ -17,7 +17,6 @@
 var _ = require('lodash');
 var assert = require('assert');
 var logger = require('bunyan').createLogger({ name: 'build-test' });
-var out = require('nscale-util/lib/consoleOut');
 var root = require('../../lib/container')();
 var Builder = require('../../lib/builder');
 var sysDef = require('../data/sysdef.json');
