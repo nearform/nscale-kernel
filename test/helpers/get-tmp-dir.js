@@ -21,5 +21,12 @@ var uuid = require('uuid').v1;
 module.exports = function(path_) {
   var tmpDir = path_ || path.join(__dirname, '..', 'tmp', uuid());
   fse.mkdirpSync(tmpDir);
+
+  if (!process.env.NO_REMOVE_TMP) {
+    process.once('exit', function() {
+      fse.removeSync(tmpDir);
+    });
+  }
+
   return tmpDir;
 };
