@@ -238,4 +238,21 @@ describe('sysrev test', function() {
       done();
     });
   });
+
+
+
+  if (!process.env.NO_INTERNET) {
+    it('should clone a repo', function(done) {
+      this.timeout(100000);
+      sysrev.cloneSystem(user, 'https://github.com/nearform/nscaledemo', getTmpDir(), function(err) {
+        assert(!err);
+
+        var systems = sysrev.listSystems();
+        assert(systems.some(function(system) {
+          return system.name === 'nscaledemo';
+        }));
+        done();
+      });
+    });
+  }
 });
