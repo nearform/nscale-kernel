@@ -241,6 +241,15 @@ describe('sysrev test', function() {
 
 
 
+  it('should fail to clone a repo with an invalid url', function(done) {
+    sysrev.cloneSystem(user, 'this:/is-not-correct', getTmpDir(), function(err) {
+      assert(err);
+      done();
+    });
+  });
+
+
+
   if (!process.env.NO_INTERNET) {
     it('should clone a repo', function(done) {
       this.timeout(100000);
