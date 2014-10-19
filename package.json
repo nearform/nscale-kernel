@@ -58,6 +58,7 @@
   "scripts": {
     "lint": "jshint lib/**/*.js test/**/*.js",
     "test-no-coverage": "mocha test/unit/*Test.js",
+    "test-coverage": "istanbul cover node_modules/.bin/_mocha -- -- test/unit/*Test.js",
     "test": "npm run lint; npm run test-no-coverage"
   }
 }
