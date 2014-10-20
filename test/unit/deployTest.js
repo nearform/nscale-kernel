@@ -18,6 +18,7 @@ var assert = require('assert');
 var logger = require('bunyan').createLogger({ name: 'deploy-test' });
 var Deployer = require('../../lib/deployer');
 var OutMock = require('../mocks/out.js');
+var sysdef = require('../data/sysdef.json');
 
 describe('deploy test', function() {
   it('should deploy an empty plan', function(done) {
@@ -32,7 +33,6 @@ describe('deploy test', function() {
 
   it('should fail to deploy a plan with no suitable containers', function(done) {
     var deployer = new Deployer({ logger: logger }, {});
-    var sysdef = require('../data/sysdef.json');
     deployer.deployPlan(sysdef, sysdef, [
       {
         id: '20',
@@ -41,6 +41,33 @@ describe('deploy test', function() {
       }
     ], 'live', new OutMock(logger), function(err) {
       assert(err);
+      done();
+    });
+  });
+
+
+
+  it('should call container-specific deploy function', function(done) {
+    var deployCalled = false;
+    var deployer = new Deployer({ logger: logger }, {
+      docker: {
+        deploy: function(mode, specific, target, containerDef, container, out, done) {
+          deployCalled = true;
+          assert.equal(mode, 'live');
+          done();
+        }
+      }
+    });
+
+    deployer.deployPlan(sysdef, sysdef, [
+      {
+        id: 'c5c9ceb9-21b3-4d56-81e7-4bff829a5c45',
+        cmd: 'deploy',
+        parent: '10'
+      }
+    ], 'live', new OutMock(logger), function(err) {
+      assert(!err);
+      assert(deployCalled);
       done();
     });
   });
