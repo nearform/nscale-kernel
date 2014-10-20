@@ -233,8 +233,11 @@ describe('sysrev test', function() {
 
 
   it('should link a directory', function(done) {
-    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err) {
+    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err, system) {
       assert(!err);
+      assert(sysrev.listSystems().some(function(system_) {
+        return system_.id === system.id;
+      }));
       done();
     });
   });
