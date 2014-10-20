@@ -22,6 +22,8 @@ module.exports = function(logger) {
   return {
     progress: log,
     stdout: log,
-    stderr: log
+    stderr: log,
+    plan: log,
+    initProgress: log
   };
 };
