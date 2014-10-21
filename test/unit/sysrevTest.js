@@ -17,6 +17,7 @@
 var path = require('path');
 var assert = require('assert');
 var bunyan = require('bunyan');
+var fs = require('fs-extra');
 var Sysrev = require('../../lib/sysrev/sysrev');
 var getTmpDir = require('../helpers/get-tmp-dir');
 
@@ -233,12 +234,17 @@ describe('sysrev test', function() {
 
 
   it('should link a directory', function(done) {
-    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err, system) {
+    var original = path.join(__dirname, '..', 'data', 'system');
+    var toLink = getTmpDir();
+    fs.copy(original, toLink, function(err) {
       assert(!err);
-      assert(sysrev.listSystems().some(function(system_) {
-        return system_.id === system.id;
-      }));
-      done();
+      sysrev.linkSystem(user, '.', toLink, function(err, system) {
+        assert(!err);
+        assert(sysrev.listSystems().some(function(system_) {
+          return system_.id === system.id;
+        }));
+        done();
+      });
     });
   });
 

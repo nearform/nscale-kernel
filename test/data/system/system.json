@@ -1,0 +1,9 @@
+{
+  "name": "system",
+  "namespace": "system",
+  "id": "0e7c43ac-707c-4bc3-8ffd-44ead7f17a13",
+  "containerDefinitions": [],
+  "topology": {
+    "containers": {}
+  }
+}
