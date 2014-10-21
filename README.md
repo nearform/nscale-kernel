@@ -1,4 +1,5 @@
-# nscale-kernel
+nscale-kernel&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/nearform/nscale-kernel.png)](https://travis-ci.org/nearform/nscale-kernel)
+=============
 
 The daemon of [nscale](http://github.com/nearform/nscale).
 

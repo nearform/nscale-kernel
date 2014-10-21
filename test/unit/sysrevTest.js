@@ -17,6 +17,7 @@
 var path = require('path');
 var assert = require('assert');
 var bunyan = require('bunyan');
+var fs = require('fs-extra');
 var Sysrev = require('../../lib/sysrev/sysrev');
 var getTmpDir = require('../helpers/get-tmp-dir');
 
@@ -46,7 +47,7 @@ var CONTAINER_ADD_DEF = { 'name': 'testing2',
                           'id': '88888888-150d-42fb-8151-da6b08fa7ce7' };
 var user = { name: 'test', email: 'test@test.com' };
 var tmpDir = getTmpDir();
-var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test' }));
+var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test', level: 60 }));
 
 
 
@@ -233,12 +234,17 @@ describe('sysrev test', function() {
 
 
   it('should link a directory', function(done) {
-    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err, system) {
+    var original = path.join(__dirname, '..', 'data', 'system');
+    var toLink = getTmpDir();
+    fs.copy(original, toLink, function(err) {
       assert(!err);
-      assert(sysrev.listSystems().some(function(system_) {
-        return system_.id === system.id;
-      }));
-      done();
+      sysrev.linkSystem(user, '.', toLink, function(err, system) {
+        assert(!err);
+        assert(sysrev.listSystems().some(function(system_) {
+          return system_.id === system.id;
+        }));
+        done();
+      });
     });
   });
 
