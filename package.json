@@ -34,7 +34,7 @@
     "nscale-local-analyzer": "~0.4.1",
     "nscale-noauth": "~0.2.0",
     "nscale-planner": "~0.1.1",
-    "nscale-protocol": "~0.3.0",
+    "nscale-protocol": "git+https://github.com/nearform/nscale-protocol.git#unlink",
     "nscale-util": "~0.3.2",
     "process-container": "~0.1.1",
     "semver": "^2.3.0",
