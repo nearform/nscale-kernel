@@ -15,7 +15,7 @@
 'use strict';
 
 var assert = require('assert');
-var logger = require('bunyan').createLogger({ name: 'deploy-test' });
+var logger = require('bunyan').createLogger({ name: 'deploy-test', level: 60 });
 var Deployer = require('../../lib/deployer');
 var OutMock = require('../mocks/out.js');
 var sysdef = require('../data/sysdef.json');
@@ -28,8 +28,6 @@ describe('deploy test', function() {
       done();
     });
   });
-
-
 
   it('should fail to deploy a plan with no suitable containers', function(done) {
     var deployer = new Deployer({ logger: logger }, {});
@@ -44,8 +42,6 @@ describe('deploy test', function() {
       done();
     });
   });
-
-
 
   it('should call container-specific deploy function', function(done) {
     var deployCalled = false;

@@ -16,7 +16,7 @@
 
 var _ = require('lodash');
 var assert = require('assert');
-var logger = require('bunyan').createLogger({ name: 'build-test' });
+var logger = require('bunyan').createLogger({ name: 'build-test', level: 60 });
 var root = require('../../lib/container')();
 var Builder = require('../../lib/builder');
 var sysDef = require('../data/sysdef.json');

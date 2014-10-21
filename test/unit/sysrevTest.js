@@ -46,7 +46,7 @@ var CONTAINER_ADD_DEF = { 'name': 'testing2',
                           'id': '88888888-150d-42fb-8151-da6b08fa7ce7' };
 var user = { name: 'test', email: 'test@test.com' };
 var tmpDir = getTmpDir();
-var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test' }));
+var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test', level: 60 }));
 
 
 
