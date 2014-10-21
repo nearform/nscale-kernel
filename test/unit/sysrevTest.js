@@ -250,6 +250,22 @@ describe('sysrev test', function() {
 
 
 
+  it('should unlink a system', function(done) {
+    sysrev.createSystem(user, 'unlinkme', 'unlinkme', tmpDir, function(err, system) {
+      assert(!err);
+      var systemId = system.id;
+      sysrev.unlinkSystem(user, systemId, function(err_) {
+        assert(!err_);
+        assert(!sysrev.listSystems().some(function(system) {
+          return system.id === systemId;
+        }));
+        done();
+      });
+    });
+  });
+
+
+
   it('should fail to clone a repo with an invalid url', function(done) {
     sysrev.cloneSystem(user, 'this:/is-not-correct', getTmpDir(), function(err) {
       assert(err);
