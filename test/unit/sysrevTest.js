@@ -233,9 +233,38 @@ describe('sysrev test', function() {
 
 
   it('should link a directory', function(done) {
-    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err) {
+    sysrev.linkSystem(user, '.', path.join(__dirname, '..', 'data', 'system'), function(err, system) {
       assert(!err);
+      assert(sysrev.listSystems().some(function(system_) {
+        return system_.id === system.id;
+      }));
       done();
     });
   });
+
+
+
+  it('should fail to clone a repo with an invalid url', function(done) {
+    sysrev.cloneSystem(user, 'this:/is-not-correct', getTmpDir(), function(err) {
+      assert(err);
+      done();
+    });
+  });
+
+
+
+  if (!process.env.NO_INTERNET) {
+    it('should clone a repo', function(done) {
+      this.timeout(100000);
+      sysrev.cloneSystem(user, 'https://github.com/nearform/nscaledemo', getTmpDir(), function(err) {
+        assert(!err);
+
+        var systems = sysrev.listSystems();
+        assert(systems.some(function(system) {
+          return system.name === 'nscaledemo';
+        }));
+        done();
+      });
+    });
+  }
 });
