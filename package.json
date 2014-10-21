@@ -47,6 +47,7 @@
     "url": "https://github.com/nearform/nscale-kernel.git"
   },
   "devDependencies": {
+    "istanbul": "^0.3.2",
     "jshint": "^2.5.6",
     "mocha": "^1.21.5",
     "through": "^2.3.4"
