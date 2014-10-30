@@ -23,6 +23,7 @@
     "blank-container": "~0.3.0",
     "bunyan": "^1.0.0",
     "docker-container": "~0.4.0",
+    "docker-registry-container": "git+https://github.com/nearform/docker-registry-container.git",
     "forever-monitor": "^1.3.0",
     "fs-extra": "~0.8.1",
     "generify": "^1.0.0",
