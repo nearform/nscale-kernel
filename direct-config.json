@@ -1,0 +1,63 @@
+{
+  "kernel": {
+    "port": "8010",
+    "systemsRoot": "./data/systems",
+    "buildRoot": "./data/build",
+    "targetRoot": "./data/targets"
+  },
+  "api": {
+    "port": 3000,
+    "sdkhost": "localhost",
+    "sdkport": "3223",
+    "https": false,
+    "cors": {
+      "allowedDomains": ["http://localhost:9000"]
+    },
+    "github": {
+      "scope": ["repo", "user:email"],
+      "clientID": "CLIENT_ID",
+      "clientSecret": "SECRET",
+      "urlhost": "http://localhost:3000",
+      "redirect": {
+        "success": "http://localhost:9000/home",
+        "failure": "http://localhost:9000"
+      }
+    }
+  },
+  "web": {
+    "ip": "0.0.0.0",
+    "port": 9000,
+    "apiserver": "http://localhost:3000",
+    "apibase": "/api/1.0"
+  },
+  "modules": {
+    "protocol": {
+      "require": "nscale-protocol",
+      "specific": {
+      }
+    },
+    "authorization": {
+      "require": "nscale-noauth",
+      "specific": {
+        "credentialsPath": "./data"
+      }
+    },
+    "analysis": {
+      "require": "nscale-direct-analyzer",
+      "specific": {
+        "user": "matteo",
+        "identityFile": "/Users/matteocollina/Temp/aaaa/my-key"
+      }
+    }
+  },
+  "containers": [
+    {"require": "blank-container",
+     "type": "blank-container",
+     "specific": {}},
+    {"require": "docker-container",
+     "type": "docker",
+     "specific": {"imageCachePath": "/tmp"}},
+    {"require": "process-container",
+     "type": "process",
+     "specific": {}}]
+}
