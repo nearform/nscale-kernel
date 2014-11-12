@@ -188,7 +188,29 @@ describe('sysrev test', function() {
     });
   });
 
+  it('should support the "head" alias for the most-recent revision', function(done){
+    var systems = sysrev.listSystems();
+    sysrev.listRevisions(systems[0].id, function(err, revisions) {
+      assert(!err);
+      sysrev.findRevision(systems[0].id, 'head', function(err, revisionId) {
+        assert(!err);
+        assert(revisionId === revisions[0].id);
+        done();
+      });
+    });
+  });
 
+  it('should support the "latest" alias for the most-recent revision', function(done){
+    var systems = sysrev.listSystems();
+    sysrev.listRevisions(systems[0].id, function(err, revisions) {
+      assert(!err);
+      sysrev.findRevision(systems[0].id, 'latest', function(err, revisionId) {
+        assert(!err);
+        assert(revisionId === revisions[0].id);
+        done();
+      });
+    });
+  });
 
   it('should add and remove containers correctly', function(done) {
     var systems = sysrev.listSystems();
