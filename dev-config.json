@@ -30,6 +30,9 @@
     "apiserver": "http://localhost:3000",
     "apibase": "/api/1.0"
   },
+  "git": {
+    "port": 9001
+  },
   "modules": {
     "protocol": {
       "require": "nscale-protocol",
