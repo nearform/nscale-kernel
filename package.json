@@ -26,7 +26,7 @@
     "docker-container": "~0.6.5",
     "forever-monitor": "^1.3.0",
     "fs-extra": "~0.8.1",
-    "generify": "^1.0.0",
+    "generify": "^1.1.0",
     "gift": "^0.4.2",
     "lodash": "^2.4.1",
     "nodegit": "^0.1.4",
