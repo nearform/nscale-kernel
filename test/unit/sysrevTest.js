@@ -84,6 +84,20 @@ describe('sysrev test', function() {
   });
 
 
+  it('should create a .gitignore when creating a repository', function(done){
+    sysrev.createSystem(user, 'test', 'test', tmpDir, function(err) {
+      assert(!err);
+      var repoPath = tmpDir + '/test';
+
+      fs.readdir(repoPath, function(err, files) {
+        assert(!err);
+        assert(files.indexOf('.gitignore') >= 0, 'missing .gitignore');
+        done();
+      });
+    });
+  });
+
+
 
   it('should get a revision', function(done){
     sysrev.listRevisions(systemId, function(err, revs) {
