@@ -30,7 +30,7 @@
     "generify": "^1.1.0",
     "gift": "^0.4.2",
     "lodash": "^2.4.1",
-    "nodegit": "^0.1.4",
+    "nodegit": "^0.2.3",
     "nscale-aws-analyzer": "~0.10.1",
     "nscale-compiler": "~0.10.1",
     "nscale-direct-analyzer": "~0.10.1",
