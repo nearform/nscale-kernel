@@ -20,32 +20,55 @@ var ku = require('../../lib/kutils');
 
 
 describe('kernel utils test', function() {
+  describe('parseGitUrl', function() {
 
-  it('should handle well formed git urls', function(done){
     var result;
+    var url;
 
-    assert(ku.checkGitUrl('git@github.com:nearform/nscalekernel.git'));
-    result = ku.parseGitUrl('git@github.com:nearform/nscalekernel.git');
-    assert(result.user === 'git');
-    assert(result.host === 'github.com');
-    assert(result.repo === 'nscalekernel');
+    it('should handle well formed git urls without a dash', function(){
+      url = 'git@github.com:nearform/nscalekernel.git';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscalekernel');
+    });
 
-    assert(ku.checkGitUrl('https://github.com/nearform/nscalekernel'));
-    result = ku.parseGitUrl('https://github.com/nearform/nscalekernel');
-    assert(result.user === 'git');
-    assert(result.host === 'github.com');
-    assert(result.repo === 'nscalekernel');
+    it('should https url without a dash', function(){
+      var url = 'https://github.com/nearform/nscalekernel';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscalekernel');
+    })
 
-    assert(ku.checkGitUrl('git@github.com:nearform/nscale-kernel.git'));
-    assert(result.user === 'git');
-    assert(result.host === 'github.com');
-    assert(result.repo === 'nscalekernel');
+    it('should parse git url with a dash', function() {
+      var url = 'git@github.com:nearform/nscale-kernel.git';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+    });
 
-    assert(ku.checkGitUrl('https://github.com/nearform/nscale-kernel'));
-    assert(result.user === 'git');
-    assert(result.host === 'github.com');
-    assert(result.repo === 'nscalekernel');
-    done();
+    it('should https url with a dash', function(){
+      var url = 'https://github.com/nearform/nscale-kernel';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+    });
+
+    it('should https url with .git at the end', function(){
+      var url = 'https://github.com/nearform/nscale-kernel.git';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+    });
   });
 });
 
