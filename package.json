@@ -29,6 +29,7 @@
     "generify": "^1.1.0",
     "gift": "^0.4.2",
     "lodash": "^2.4.1",
+    "mkdirp": "^0.5.0",
     "nodegit": "^0.2.3",
     "nscale-aws-analyzer": "~0.11.0",
     "nscale-compiler": "~0.10.1",

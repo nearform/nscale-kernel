@@ -41,7 +41,7 @@ describe('kernel utils test', function() {
       assert(result.user === 'git');
       assert(result.host === 'github.com');
       assert(result.repo === 'nscalekernel');
-    })
+    });
 
     it('should parse git url with a dash', function() {
       var url = 'git@github.com:nearform/nscale-kernel.git';
