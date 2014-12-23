@@ -32,6 +32,7 @@ describe('kernel utils test', function() {
       assert(result.user === 'git');
       assert(result.host === 'github.com');
       assert(result.repo === 'nscalekernel');
+      assert(result.branch === 'master');
     });
 
     it('should https url without a dash', function(){
@@ -41,6 +42,7 @@ describe('kernel utils test', function() {
       assert(result.user === 'git');
       assert(result.host === 'github.com');
       assert(result.repo === 'nscalekernel');
+      assert(result.branch === 'master');
     });
 
     it('should parse git url with a dash', function() {
@@ -50,6 +52,7 @@ describe('kernel utils test', function() {
       assert(result.user === 'git');
       assert(result.host === 'github.com');
       assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'master');
     });
 
     it('should https url with a dash', function(){
@@ -59,6 +62,7 @@ describe('kernel utils test', function() {
       assert(result.user === 'git');
       assert(result.host === 'github.com');
       assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'master');
     });
 
     it('should https url with .git at the end', function(){
@@ -68,6 +72,27 @@ describe('kernel utils test', function() {
       assert(result.user === 'git');
       assert(result.host === 'github.com');
       assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'master');
+    });
+
+    it('should https url with a branch at the end', function(){
+      var url = 'https://github.com/nearform/nscale-kernel.git#develop';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'develop');
+    });
+
+    it('should handle well formed git urls with a branch at the end', function(){
+      url = 'git@github.com:nearform/nscalekernel.git#develop';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscalekernel');
+      assert(result.branch === 'develop');
     });
   });
 });
