@@ -37,7 +37,7 @@ Defines the system namespace, name and id. Also defines a simple topology for lo
   		}
 	};
 
-Deines a root conainer and a web container to hold the hello world application.
+Defines a root container and a web container to hold the hello world application.
 
 ###map.js
 
