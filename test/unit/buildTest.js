@@ -26,6 +26,11 @@ root.load(sysDef);
 
 describe('build test', function() {
 
+  var user = {
+    name: 'Matteo Collina',
+    email: 'hello@matteocollina.com'
+  };
+
   beforeEach(function(done) {
     done();
   });
@@ -37,7 +42,7 @@ describe('build test', function() {
   it('should fail the build if there are no suitable container types', function(done) {
     var builder = new Builder({ logger: logger }, {});
     var cDef = root.containerDefByDefId('222409de-150d-42fb-8151-da6b08fa7ce7');
-    builder.build('live', sysDef, cDef, outMock(logger), function(err) {
+    builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
       assert(err);
       done();
     });
@@ -45,7 +50,7 @@ describe('build test', function() {
 
   it('should call container-specific methods', function(done){
     var buildCalled = false;
-  
+
     var builder = new Builder({ logger: logger }, {
       docker: {
         build: function(mode, sysDef_, cDef_, out, cb) {
@@ -56,10 +61,18 @@ describe('build test', function() {
           cb(null);
         }
       }
+    }, {
+      writeTimeline: function() {},
+      writeFile: function(a, b, c, cb) {
+        cb();
+      },
+      commitRevision: function(a, b, c, cb) {
+        cb();
+      },
     });
 
     var cDef = root.containerDefByDefId('222409de-150d-42fb-8151-da6b08fa7ce7');
-    builder.build('live', sysDef, cDef, outMock(logger), function(err) {
+    builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
       assert(!err);
       assert(buildCalled);
       done();
@@ -76,10 +89,18 @@ describe('build test', function() {
           cb(null, specific);
         }
       }
+    }, {
+      writeTimeline: function() {},
+      writeFile: function(a, b, c, cb) {
+        cb();
+      },
+      commitRevision: function(a, b, c, cb) {
+        cb();
+      },
     });
 
     var cDef = root.containerDefByDefId(cDefId);
-    builder.build('live', sysDef, cDef, outMock(logger), function(err) {
+    builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
       assert(!err);
 
       var matches = _.filter(sysDef.topology.containers, function(c) {

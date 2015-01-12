@@ -33,18 +33,7 @@ var CONTAINER_DEF = { 'name': 'test',
                       },
                       'version': '0.1.0',
                       'id': '222409de-150d-42fb-8151-da6b08fa7ce7' };
-var CONTAINER_ADD_DEF = { 'name': 'testing2',
-                          'type': 'docker',
-                          'specific': {
-                            'repositoryUrl': 'git@github.com:pelger/startupdeathclock.git',
-                            'buildScript': 'builddoc.sh',
-                            'arguments': '-p 9002:9002 -d __TARGETNAME__ /usr/bin/node /srv/doc-srv',
-                            'buildHead': 21,
-                            'binary': '/tmp/nfd/sudc/builds/doc-srv-20',
-                            'dockerImageId': '335ec84437051155ecf37f54f5e158508a228961b813fbc0b6ab6ed0d73a6816'
-                          },
-                          'version': '0.1.0',
-                          'id': '88888888-150d-42fb-8151-da6b08fa7ce7' };
+
 var user = { name: 'test', email: 'test@test.com' };
 var tmpDir = getTmpDir();
 var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test', level: 60 }));
@@ -97,45 +86,47 @@ describe('sysrev test', function() {
     });
   });
 
-
-
-  it('should get a revision', function(done){
+  it('should error when getting a revision without compilation', function(done){
     sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.getRevision(systemId, revs[0].id, function(err, json) {
-        assert(!err);
-        assert(json);
+      sysrev.getRevision(systemId, revs[0].id, 'development', function(err, json) {
+        assert(err);
+        assert(!json);
         done();
       });
     });
   });
 
+  it('should create and get a revision', function(done){
+    var expected = {
+      'name': 'test',
+      'namespace': 'test',
+      'id': systemId,
+      'containerDefinitions': [CONTAINER_DEF],
+      'topology': {
+        'containers': {}
+      }
+    };
 
+    // fake a compilation
+    fs.writeFileSync(path.join(tmpDir, 'test', 'development.json'), JSON.stringify(expected));
 
-  it('should create a new revision', function(done){
-    sysrev.listRevisions(systemId, function(err, revs) {
+    sysrev.commitRevision(user, systemId, 'fake compilation', function(err) {
       assert(!err);
-      sysrev.getRevision(systemId, revs[0].id, function(err, json) {
-        json.containerDefinitions.push(CONTAINER_DEF);
-        sysrev.commitRevision(user, systemId, 'added container def', json, function() {
-          sysrev.listRevisions(systemId, function(err, revs) {
-            sysrev.getRevision(systemId, revs[0].id, function(err, json) {
-              assert(!err);
-              assert(json.name === 'test');
-              assert(json.namespace === 'test');
-              assert(json.containerDefinitions[0].name);
-              done();
-            });
-          });
+
+      sysrev.listRevisions(systemId, function(err, revs) {
+        assert(!err);
+        sysrev.getRevision(systemId, revs[0].id, 'development', function(err, json) {
+          assert(json);
+          assert(!err);
+          done();
         });
       });
     });
   });
 
-
-
   it('should read the head revision correctly', function(done){
-    sysrev.getHead(systemId, function(err, json) {
+    sysrev.getHead(systemId, 'development', function(err, json) {
       assert(!err);
       assert(json.name === 'test');
       assert(json.namespace === 'test');
@@ -144,14 +135,12 @@ describe('sysrev test', function() {
     });
   });
 
-
-
   it('should correctly mark the deployed revision', function(done){
     sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
       sysrev.markDeployedRevision(user, systemId, revs[0].id, function(err) {
         assert(!err);
-        sysrev.getDeployedRevision(systemId, function(err, json) {
+        sysrev.getDeployedRevision(systemId, 'development', function(err, json) {
           assert(!err);
           assert(json);
           done();
@@ -161,11 +150,10 @@ describe('sysrev test', function() {
   });
 
 
-
   it('should list the available systems', function(done){
     var systems = sysrev.listSystems();
     assert(systems);
-    assert.equal(systems.length, 1);
+    assert.equal(systems.length, 2);
     assert.equal(systems[0].name, 'test');
     done();
   });
@@ -182,7 +170,7 @@ describe('sysrev test', function() {
 
   it('should find a container from a guid', function(done){
     var systems = sysrev.listSystems();
-    sysrev.findContainer(systems[0].id, '22', function(err, containerId) {
+    sysrev.findContainer(systems[0].id, '22', 'development', function(err, containerId) {
       assert(containerId);
       done();
     });
@@ -226,41 +214,9 @@ describe('sysrev test', function() {
     });
   });
 
-  it('should add and remove containers correctly', function(done) {
-    var systems = sysrev.listSystems();
-    var count;
-    sysrev.getHead(systems[0].id, function(err, head) {
-      assert(!err);
-      count = parseInt(head.containerDefinitions.length, 10);
-      sysrev.addContainer(user, systems[0].id, CONTAINER_ADD_DEF, function(err) {
-        assert(!err);
-        sysrev.getHead(systems[0].id, function(err, head) {
-          assert(!err);
-          assert(head.containerDefinitions.length === count + 1);
-          CONTAINER_ADD_DEF.version = '0.2.0';
-          sysrev.putContainer(user, systems[0].id, CONTAINER_ADD_DEF, function(err) { 
-            assert(!err);
-            sysrev.getHead(systems[0].id, function(err, head) {
-              assert(!err);
-              assert(head.containerDefinitions.length === count + 1);
-              sysrev.deleteContainer(user, systems[0].id, CONTAINER_ADD_DEF.id, function(err) {
-                assert(!err);
-                sysrev.getHead(systems[0].id, function(err, head) {
-                  assert(!err);
-                  assert(head.containerDefinitions.length === count);
-                  done();
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
 
 
-
-  it('should fail to link a directory with no system.json', function(done) {
+  it('should fail to link a directory with no system.js', function(done) {
     sysrev.linkSystem(user, '.', getTmpDir(), function(err) {
       assert(err);
       done();
