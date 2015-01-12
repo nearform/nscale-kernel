@@ -1,9 +1,0 @@
-{
-  "name": "__name__",
-  "namespace": "__namespace__",
-  "id": "__id__",
-  "containerDefinitions": [],
-  "topology": {
-    "containers": {}
-  }
-}
