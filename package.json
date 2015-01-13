@@ -53,6 +53,7 @@
     "istanbul": "^0.3.2",
     "jshint": "^2.5.6",
     "mocha": "^2.1.0",
+    "pre-commit": "0.0.9",
     "through": "^2.3.4"
   },
   "bin": {
@@ -63,6 +64,6 @@
     "lint": "jshint lib/**/*.js test/**/*.js",
     "test-no-coverage": "mocha test/unit/*Test.js",
     "test-coverage": "istanbul cover node_modules/.bin/_mocha -- -- test/unit/*Test.js",
-    "test": "npm run lint; npm run test-no-coverage"
+    "test": "npm run lint && npm run test-no-coverage"
   }
 }
