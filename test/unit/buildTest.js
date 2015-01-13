@@ -14,7 +14,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var assert = require('assert');
 var logger = require('bunyan').createLogger({ name: 'build-test', level: 60 });
 var root = require('../../lib/container')();
