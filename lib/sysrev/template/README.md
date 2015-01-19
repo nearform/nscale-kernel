@@ -58,6 +58,5 @@ Holds minimal id and name mapping for the web service container.
 The following files are generated and managed by nscale
 
 - system.json - compiled system definition, build from system.js and related files
-- deployed.json - holds the currently deployed revision of the system
 - timeline.json - holds deployment event information
 
