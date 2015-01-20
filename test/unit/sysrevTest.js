@@ -36,9 +36,10 @@ var CONTAINER_DEF = { 'name': 'test',
 
 var user = { name: 'test', email: 'test@test.com' };
 var tmpDir = getTmpDir();
-var sysrev = new Sysrev({ systemsRoot: tmpDir }, bunyan.createLogger({ name: 'sysrev-test', level: 60 }));
+var timelinesRoot = path.join(tmpDir, 'timelines');
+var sysrev = new Sysrev({ systemsRoot: tmpDir, timelinesRoot: timelinesRoot }, bunyan.createLogger({ name: 'sysrev-test', level: 60 }));
 
-
+fs.mkdirSync(timelinesRoot);
 
 describe('sysrev test', function() {
   var systemId;
@@ -74,15 +75,12 @@ describe('sysrev test', function() {
 
 
   it('should create a .gitignore when creating a repository', function(done){
-    sysrev.createSystem(user, 'test', 'test', tmpDir, function(err) {
-      assert(!err);
-      var repoPath = tmpDir + '/test';
+    var repoPath = tmpDir + '/test';
 
-      fs.readdir(repoPath, function(err, files) {
-        assert(!err);
-        assert(files.indexOf('.gitignore') >= 0, 'missing .gitignore');
-        done();
-      });
+    fs.readdir(repoPath, function(err, files) {
+      assert(!err);
+      assert(files.indexOf('.gitignore') >= 0, 'missing .gitignore');
+      done();
     });
   });
 
@@ -153,7 +151,7 @@ describe('sysrev test', function() {
   it('should list the available systems', function(done){
     var systems = sysrev.listSystems();
     assert(systems);
-    assert.equal(systems.length, 2);
+    assert.equal(systems.length, 1);
     assert.equal(systems[0].name, 'test');
     done();
   });
@@ -266,6 +264,14 @@ describe('sysrev test', function() {
   });
 
 
+  it('should read the timeline', function(done){
+    sysrev.getTimeline('test', function(err, list) {
+      assert(!err, 'no error');
+      assert(Array.isArray(list), 'list is an array');
+      assert(list.length > 0, 'list has some content');
+      done();
+    });
+  });
 
   if (!process.env.NO_INTERNET) {
     it('should clone a repo', function(done) {
