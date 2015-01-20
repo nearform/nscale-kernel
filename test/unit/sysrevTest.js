@@ -138,7 +138,7 @@ describe('sysrev test', function() {
   it('should correctly mark the deployed revision', function(done){
     sysrev.listRevisions(systemId, function(err, revs) {
       assert(!err);
-      sysrev.markDeployedRevision(user, systemId, revs[0].id, function(err) {
+      sysrev.markDeployedRevision(user, systemId, revs[0].id, 'development', function(err) {
         assert(!err);
         sysrev.getDeployedRevision(systemId, 'development', function(err, json) {
           assert(!err);
