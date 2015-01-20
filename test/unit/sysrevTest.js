@@ -266,6 +266,13 @@ describe('sysrev test', function() {
   });
 
 
+  it('should read the timeline', function(done){
+    sysrev.getTimeline(systemId, function(err, list) {
+      assert(Array.isArray(list), 'list is an array');
+      assert(list.length > 0, 'list has some content');
+      done();
+    });
+  });
 
   if (!process.env.NO_INTERNET) {
     it('should clone a repo', function(done) {
