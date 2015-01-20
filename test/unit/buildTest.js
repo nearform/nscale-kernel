@@ -14,7 +14,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var assert = require('assert');
 var logger = require('bunyan').createLogger({ name: 'build-test', level: 60 });
 var root = require('../../lib/container')();
@@ -75,39 +74,6 @@ describe('build test', function() {
     builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
       assert(!err);
       assert(buildCalled);
-      done();
-    });
-  });
-
-  it('should update topology', function(done){
-    var specific = { specific: 'data' };
-    var cDefId = '222409de-150d-42fb-8151-da6b08fa7ce7';
-
-    var builder = new Builder({ logger: logger }, {
-      docker: {
-        build: function(mode, system, cdef, out, cb) {
-          cb(null, specific);
-        }
-      }
-    }, {
-      writeTimeline: function() {},
-      writeFile: function(a, b, c, cb) {
-        cb();
-      },
-      commitRevision: function(a, b, c, cb) {
-        cb();
-      },
-    });
-
-    var cDef = root.containerDefByDefId(cDefId);
-    builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
-      assert(!err);
-
-      var matches = _.filter(sysDef.topology.containers, function(c) {
-        return c.containerDefinitionId === cDefId;
-      });
-      assert.equal(matches.length, 1);
-      assert.deepEqual(matches[0].specific, specific);
       done();
     });
   });
