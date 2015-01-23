@@ -254,16 +254,6 @@ describe('sysrev test', function() {
     });
   });
 
-
-
-  it('should fail to clone a repo with an invalid url', function(done) {
-    sysrev.cloneSystem(user, 'this:/is-not-correct', getTmpDir(), function(err) {
-      assert(err);
-      done();
-    });
-  });
-
-
   it('should read the timeline', function(done){
     sysrev.getTimeline('test', function(err, list) {
       assert(!err, 'no error');
@@ -272,19 +262,4 @@ describe('sysrev test', function() {
       done();
     });
   });
-
-  if (!process.env.NO_INTERNET) {
-    it('should clone a repo', function(done) {
-      this.timeout(100000);
-      sysrev.cloneSystem(user, 'https://github.com/nearform/nscaledemo', getTmpDir(), function(err) {
-        assert(!err);
-
-        var systems = sysrev.listSystems();
-        assert(systems.some(function(system) {
-          return system.name === 'nscaledemo';
-        }));
-        done();
-      });
-    });
-  }
 });
