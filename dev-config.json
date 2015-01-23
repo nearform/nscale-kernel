@@ -1,9 +1,7 @@
 {
   "kernel": {
     "port": "8010",
-    "systemsRoot": "./data/systems",
-    "buildRoot": "./data/build",
-    "targetRoot": "./data/targets"
+    "root": "./data/"
   },
   "api": {
     "port": 3000,
