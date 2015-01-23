@@ -147,7 +147,6 @@ describe('sysrev test', function() {
     });
   });
 
-
   it('should list the available systems', function(done){
     var systems = sysrev.listSystems();
     assert(systems);
@@ -156,15 +155,11 @@ describe('sysrev test', function() {
     done();
   });
 
-
-
   it('should find a system from a partial name', function(done){
     var systems = sysrev.listSystems();
     assert(sysrev.findSystem('test') === systems[0].id);
     done();
   });
-
-
 
   it('should find a container from a guid', function(done){
     var systems = sysrev.listSystems();
@@ -173,8 +168,6 @@ describe('sysrev test', function() {
       done();
     });
   });
-
-
 
   it('should find a revision from a partial guid', function(done){
     var systems = sysrev.listSystems();
@@ -212,16 +205,12 @@ describe('sysrev test', function() {
     });
   });
 
-
-
   it('should fail to link a directory with no system.js', function(done) {
     sysrev.linkSystem(user, '.', getTmpDir(), function(err) {
       assert(err);
       done();
     });
   });
-
-
 
   it('should link a directory', function(done) {
     var original = path.join(__dirname, '..', 'data', 'system');
@@ -237,8 +226,6 @@ describe('sysrev test', function() {
       });
     });
   });
-
-
 
   it('should unlink a system', function(done) {
     sysrev.createSystem(user, 'unlinkme', 'unlinkme', tmpDir, function(err, system) {
