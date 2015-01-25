@@ -54,9 +54,6 @@
     {"require": "blank-container",
      "type": "blank-container",
      "specific": {}},
-    {"require": "process-container",
-     "type": "process",
-     "specific": {}},
     {"require": "docker-container",
      "type": "docker",
      "specific": { "noTunnel": true }}]
