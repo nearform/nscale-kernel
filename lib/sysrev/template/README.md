@@ -12,22 +12,22 @@ The following files are used by nscale for system management.
 	exports.id = 'e1144711-47bb-5931-9117-94f01dd20f6f';
 
 	exports.topology = {
-	  local: {
+	  development: {
     	root: ['web']
 	  }
 	};
-	
+
 Defines the system namespace, name and id. Also defines a simple topology for local deployment.
 
 
 ###definitions/services.js
 
 	exports.root = {
-  		type: 'container'
+  		type: 'blank-container'
 	};
 
 	exports.web = {
-		type: 'process',
+		type: 'docker',
 		specific: {
     		repositoryUrl: 'git@github.com:nearform/nscaledemoweb.git',
     		execute: {
@@ -39,24 +39,7 @@ Defines the system namespace, name and id. Also defines a simple topology for lo
 
 Defines a root container and a web container to hold the hello world application.
 
-###map.js
+### generated files
 
-	exports.types = {
-		local: {}
-	};
-
-	exports.ids = {
-  		local: {
-    		root: { id: '85d99b2c-06d0-5485-9501-4d4ed429799c' },
-    		web: {name: 'web'},
-  		}
-	};
-
-Holds minimal id and name mapping for the web service container.
- 
-###generated files
-The following files are generated and managed by nscale
-
-- system.json - compiled system definition, build from system.js and related files
-- timeline.json - holds deployment event information
+The `<environment>.json` contains the compiled system definition, build from system.js and related files, for the environment. In this example it will produce only `development.json`, to add more add siblings to the `development` key in `system.js`.
 
