@@ -85,7 +85,41 @@ describe('kernel utils test', function() {
       assert(result.host === 'github.com');
       assert(result.repo === 'nscale-kernel');
       assert(result.branch === 'develop');
+      assert(result.cloneUrl === 'https://github.com/nearform/nscale-kernel.git');
     });
+
+    it('should https url with a branch with a /', function(){
+      var url = 'https://github.com/nearform/nscale-kernel.git#feature/abcde';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'feature/abcde');
+    });
+
+    it('should https url with a branch with a /', function(){
+      var url = 'https://github.com/nearform/nscale-kernel.git#feature/abcde';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'feature/abcde');
+      assert(result.cloneUrl === 'https://github.com/nearform/nscale-kernel.git');
+    });
+
+    it('should https url with a branch with a / and a -', function(){
+      var url = 'https://github.com/nearform/nscale-kernel.git#feature/abc-de';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscale-kernel');
+      assert(result.branch === 'feature/abc-de');
+      assert(result.cloneUrl === 'https://github.com/nearform/nscale-kernel.git');
+    });
+
 
     it('should handle well formed git urls with a branch at the end', function(){
       url = 'git@github.com:nearform/nscalekernel.git#develop';
@@ -96,6 +130,16 @@ describe('kernel utils test', function() {
       assert(result.repo === 'nscalekernel');
       assert(result.branch === 'develop');
       assert(result.cloneUrl === 'git@github.com:nearform/nscalekernel.git');
+    });
+
+    it('should handle a branch with a / over ssh', function(){
+      url = 'git@github.com:nearform/nscalekernel.git#feature/abcde';
+      assert(ku.checkGitUrl(url));
+      result = ku.parseGitUrl(url);
+      assert(result.user === 'git');
+      assert(result.host === 'github.com');
+      assert(result.repo === 'nscalekernel');
+      assert(result.branch === 'feature/abcde');
     });
 
     it('should https url with a username and a password', function(){
