@@ -39,7 +39,11 @@ describe('build test', function() {
   });
 
   it('should fail the build if there are no suitable container types', function(done) {
-    var builder = new Builder({ logger: logger }, {});
+    var containers = {};
+    containers.getHandler = function() {
+      return null;
+    };
+    var builder = new Builder({ logger: logger }, containers);
     var cDef = root.containerDefByDefId('222409de-150d-42fb-8151-da6b08fa7ce7');
     builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
       assert(err);
@@ -50,17 +54,23 @@ describe('build test', function() {
   it('should call container-specific methods', function(done){
     var buildCalled = false;
 
-    var builder = new Builder({ logger: logger }, {
-      docker: {
-        build: function(mode, sysDef_, cDef_, out, cb) {
-          buildCalled = true;
-          assert.equal(mode, 'live');
-          assert.deepEqual(sysDef_, sysDef);
-          assert.deepEqual(cDef_, cDef);
-          cb(null);
-        }
+    var containers = {};
+    containers.getHandler = function(system, type) {
+      if (type === 'docker') {
+        return {
+          build: function(mode, sysDef_, cDef_, out, cb) {
+            buildCalled = true;
+            assert.equal(mode, 'live');
+            assert.deepEqual(sysDef_, sysDef);
+            assert.deepEqual(cDef_, cDef);
+            cb(null);
+          }
+        };
       }
-    }, {
+      return null;
+    };
+
+    var builder = new Builder({ logger: logger }, containers, {
       writeTimeline: function() {},
       writeFile: function(a, b, c, cb) {
         cb();
