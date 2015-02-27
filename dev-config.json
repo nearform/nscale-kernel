@@ -39,11 +39,6 @@
       "specific": {
         "credentialsPath": "./data"
       }
-    },
-    "analysis": {
-      "require": "nscale-local-analyzer",
-      "specific": {
-      }
     }
   }
 }
