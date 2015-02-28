@@ -18,10 +18,6 @@ var assert = require('assert');
 var root = require('../../lib/container')();
 
 describe('container test', function() {
-  afterEach(function(done) {
-    done();
-  });
-
   it('should get container definition by definition id', function(done) {
     root.load(require('./system.json'));
     var c = root.containerDefByDefId('4');
