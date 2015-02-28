@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.14.10",
+  "version": "0.14.12",
   "license": "Artistic License 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
@@ -39,7 +39,7 @@
     "nscale-local-analyzer": "git+http://github.com/nearform/nscale-local-analyzer.git#can-analyze",
     "nscale-noauth": "~0.2.0",
     "nscale-planner": "~0.1.1",
-    "nscale-protocol": "~0.14.4",
+    "nscale-protocol": "~0.14.5",
     "nscale-util": "~0.11.0",
     "process-container": "~0.2.0",
     "semver": "^2.3.0",
