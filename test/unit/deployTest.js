@@ -23,10 +23,10 @@ var sysdef = require('../data/sysdef.json');
 describe('deploy test', function() {
   it('should deploy an empty plan', function(done) {
     var containers = {};
-    containers.getHandler = function() {
-      return null;
+    containers.getHandler = function(sys, type, cb) {
+      return cb();
     };
-    var deployer = new Deployer({ logger: logger }, containers);
+    var deployer = new Deployer(logger, containers);
     deployer.deployPlan({}, {}, [], 'live', new OutMock(logger), function(err) {
       assert(!err);
       done();
@@ -35,10 +35,10 @@ describe('deploy test', function() {
 
   it('should fail to deploy a plan with no suitable containers', function(done) {
     var containers = {};
-    containers.getHandler = function() {
-      return null;
+    containers.getHandler = function(sys, type, cb) {
+      return cb();
     };
-    var deployer = new Deployer({ logger: logger }, containers);
+    var deployer = new Deployer(logger, containers);
     deployer.deployPlan(sysdef, sysdef, [
       {
         id: '20',
@@ -55,20 +55,20 @@ describe('deploy test', function() {
     var deployCalled = false;
 
     var containers = {};
-    containers.getHandler = function(system, type) {
+    containers.getHandler = function(system, type, cb) {
       if (type === 'docker') {
-        return {
+        return cb(null, {
           deploy: function(mode, specific, target, containerDef, container, out, done) {
             deployCalled = true;
             assert.equal(mode, 'live');
             done();
           }
-        };
+        });
       }
       return null;
     };
 
-    var deployer = new Deployer({ logger: logger }, containers);
+    var deployer = new Deployer(logger, containers);
 
     deployer.deployPlan(sysdef, sysdef, [
       {

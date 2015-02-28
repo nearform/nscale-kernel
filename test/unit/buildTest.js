@@ -16,12 +16,10 @@
 
 var assert = require('assert');
 var logger = require('bunyan').createLogger({ name: 'build-test', level: 60 });
-var root = require('../../lib/container')();
 var Builder = require('../../lib/builder');
 var sysDef = require('../data/sysdef.json');
+var root = require('../../lib/container')(sysDef);
 var outMock = require('../mocks/out.js');
-
-root.load(sysDef);
 
 describe('build test', function() {
 
@@ -40,10 +38,10 @@ describe('build test', function() {
 
   it('should fail the build if there are no suitable container types', function(done) {
     var containers = {};
-    containers.getHandler = function() {
-      return null;
+    containers.getHandler = function(sys, type, cb) {
+      return cb();
     };
-    var builder = new Builder({ logger: logger }, containers);
+    var builder = new Builder(logger, containers);
     var cDef = root.containerDefByDefId('222409de-150d-42fb-8151-da6b08fa7ce7');
     builder.build(user, sysDef.id, { development: sysDef }, sysDef, cDef, 'development', outMock(logger), function(err) {
       assert(err);
@@ -55,9 +53,9 @@ describe('build test', function() {
     var buildCalled = false;
 
     var containers = {};
-    containers.getHandler = function(system, type) {
+    containers.getHandler = function(system, type, cb) {
       if (type === 'docker') {
-        return {
+        return cb(null, {
           build: function(mode, sysDef_, cDef_, out, cb) {
             buildCalled = true;
             assert.equal(mode, 'live');
@@ -65,12 +63,12 @@ describe('build test', function() {
             assert.deepEqual(cDef_, cDef);
             cb(null);
           }
-        };
+        });
       }
       return null;
     };
 
-    var builder = new Builder({ logger: logger }, containers, {
+    var builder = new Builder(logger, containers, {
       writeTimeline: function() {},
       writeFile: function(a, b, c, cb) {
         cb();

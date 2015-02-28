@@ -31,12 +31,13 @@ describe('config loader', function() {
     dir = getTmpDir();
     system = JSON.parse(fs.readFileSync(path.join(__dirname, 'system.json')));
     fs.writeFileSync(path.join(dir, 'development.json'), JSON.stringify(system));
-    system.rootPath = dir;
+    system.repoPath = dir;
   });
 
   it('should load the system config if no config is in the system root', function(done) {
     var load = loader(sourceConfig);
-    load(system, 'development', function(err, config) {
+    system.topology.name = 'development';
+    load(system, function(err, config) {
       assert.deepEqual(config, sourceConfig);
       assert.notEqual(config, sourceConfig);
       done();
@@ -48,9 +49,10 @@ describe('config loader', function() {
     var localConfig = {
       hello: 'world'
     };
+    system.topology.name = 'development';
     var configString = 'module.exports = ' + JSON.stringify(localConfig, null, 2);
     fs.writeFileSync(path.join(dir, 'config.js'), configString);
-    load(system, 'development', function(err, config) {
+    load(system, function(err, config) {
       assert.equal(config.hello, localConfig.hello);
       delete config.hello;
       assert.deepEqual(config, sourceConfig);
@@ -68,9 +70,29 @@ describe('config loader', function() {
     };
     var configString = 'module.exports = ' + JSON.stringify(localConfig, null, 2);
     fs.writeFileSync(path.join(dir, 'config.js'), configString);
-    load(system, 'development', function(err, config) {
+    system.topology.name = 'development';
+    load(system, function(err, config) {
       assert.equal(config.hello, localConfig.development.hello);
       delete config.hello;
+      delete config.development;
+      assert.deepEqual(config, sourceConfig);
+      assert.notEqual(config, sourceConfig);
+      done();
+    });
+  });
+
+  it('should skip irrelevant target-specific config', function(done) {
+    var load = loader(sourceConfig);
+    var localConfig = {
+      development: {
+        hello: 'world'
+      }
+    };
+    var configString = 'module.exports = ' + JSON.stringify(localConfig, null, 2);
+    fs.writeFileSync(path.join(dir, 'config.js'), configString);
+    system.topology.name = 'staging';
+    load(system, function(err, config) {
+      assert(!config.hello);
       delete config.development;
       assert.deepEqual(config, sourceConfig);
       assert.notEqual(config, sourceConfig);
