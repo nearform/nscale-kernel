@@ -41,7 +41,7 @@
     "nscale-planner": "~0.1.1",
     "nscale-protocol": "~0.14.6",
     "nscale-util": "~0.11.2",
-    "process-container": "~0.2.0",
+    "process-container": "git+http://github.com/nearform/process-container.git#added-release",
     "semver": "^2.3.0",
     "split2": "^0.2.1",
     "urlencode": "^0.2.0",
