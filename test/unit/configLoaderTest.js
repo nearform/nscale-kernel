@@ -99,4 +99,13 @@ describe('config loader', function() {
       done();
     });
   });
+
+  it('should error if the config file is non-js', function(done) {
+    var load = loader(sourceConfig);
+    fs.writeFileSync(path.join(dir, 'config.js'), 'ahahah');
+    load(system, function(err) {
+      assert(err, 'missing err');
+      done();
+    });
+  });
 });
