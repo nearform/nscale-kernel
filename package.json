@@ -20,7 +20,7 @@
     "async": "^0.9.0",
     "aws-ami-container": "~0.15.0",
     "aws-elb-container": "~0.15.0",
-    "aws-sg-container": "~0.14.2",
+    "aws-sg-container": "~0.15.0",
     "blank-container": "~0.3.0",
     "bunyan": "^1.0.0",
     "callback-stream": "^1.0.2",
