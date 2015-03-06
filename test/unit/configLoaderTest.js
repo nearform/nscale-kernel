@@ -100,9 +100,18 @@ describe('config loader', function() {
     });
   });
 
-  it('should error if the config file is non-js', function(done) {
+  it('should error if the config file is an unknonwn identifier', function(done) {
     var load = loader(sourceConfig);
     fs.writeFileSync(path.join(dir, 'config.js'), 'ahahah');
+    load(system, function(err) {
+      assert(err, 'missing err');
+      done();
+    });
+  });
+
+  it('should error if the config file has a syntax error', function(done) {
+    var load = loader(sourceConfig);
+    fs.writeFileSync(path.join(dir, 'config.js'), 'module.exports = { aaa: "bbb" ccc: "ddd" }');
     load(system, function(err) {
       assert(err, 'missing err');
       done();
