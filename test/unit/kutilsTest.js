@@ -173,6 +173,41 @@ describe('kernel utils test', function() {
       assert(result.repo === 'bar');
       assert(result.branch === 'master');
     });
+
+    it('should add a generic user and passwod based on options', function(){
+      var url = 'https://github.com/nearform/nscalekernel.git';
+      result = ku.parseGitUrl(url, {
+        repositories: {
+          user: 'mcollina',
+          password: 'Mypass1234'
+        }
+      });
+      assert(result.cloneUrl === 'https://mcollina:Mypass1234@github.com/nearform/nscalekernel.git');
+    });
+
+    it('should URL-encode username and passwords', function(){
+      var url = 'https://github.com/nearform/nscalekernel.git';
+      result = ku.parseGitUrl(url, {
+        repositories: {
+          user: 'matteo.collina@nearform.com',
+          password: 'Mypass1234'
+        }
+      });
+      assert(result.cloneUrl === 'https://matteo.collina%40nearform.com:Mypass1234@github.com/nearform/nscalekernel.git');
+    });
+
+    it('should add repo-specific username and password', function(){
+      var url = 'https://github.com/nearform/nscalekernel.git';
+      result = ku.parseGitUrl(url, {
+        repositories: {
+          'https://github.com/nearform/nscalekernel.git': {
+            user: 'mcollina',
+            password: 'Mypass1234'
+          }
+        }
+      });
+      assert(result.cloneUrl === 'https://mcollina:Mypass1234@github.com/nearform/nscalekernel.git');
+    });
   });
 });
 

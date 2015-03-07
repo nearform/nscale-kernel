@@ -15,29 +15,25 @@
 'use strict';
 
 var assert = require('assert');
-var root = require('../../lib/container')();
+var buildRoot = require('../../lib/container');
 
 describe('container test', function() {
-  afterEach(function(done) {
-    done();
-  });
-
   it('should get container definition by definition id', function(done) {
-    root.load(require('./system.json'));
+    var root = buildRoot(require('./system.json'));
     var c = root.containerDefByDefId('4');
     assert(c.name === 'node-1');
     done();
   });
 
   it('should get container def by id', function(done) {
-    root.load(require('./system.json'));
+    var root = buildRoot(require('./system.json'));
     var c = root.containerDefById('34');
     assert(c.name === 'node-1');
     done();
   });
 
   it('should get container by id', function(done) {
-    root.load(require('./system.json'));
+    var root = buildRoot(require('./system.json'));
     var c = root.containerById('34');
     assert(c.containerDefinitionId = '4');
     done();

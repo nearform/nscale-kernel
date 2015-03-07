@@ -12,7 +12,6 @@ logs
 results
 node_modules
 npm-debug.log
-mochahelper.js
 
 .idea/
 .settings/
@@ -20,8 +19,8 @@ mochahelper.js
 dist
 .tmp
 .sass-cache
-app/bower_components
 options.mine.js
+
 workspace
-build
-builds
+config.js
+*.pem

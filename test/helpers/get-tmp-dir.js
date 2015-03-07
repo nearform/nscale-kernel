@@ -18,6 +18,8 @@ var path = require('path');
 var fse = require('fs-extra');
 var uuid = require('uuid').v1;
 
+process.setMaxListeners(0);
+
 module.exports = function(path_) {
   var tmpDir = path_ || path.join(__dirname, '..', 'tmp', uuid());
   fse.mkdirpSync(tmpDir);
