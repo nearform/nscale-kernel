@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.15.0-pre1",
+  "version": "0.15.0-pre2",
   "license": "Artistic License 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
@@ -18,13 +18,13 @@
   },
   "dependencies": {
     "async": "^0.9.0",
-    "aws-ami-container": "~0.15.0",
-    "aws-elb-container": "~0.15.0",
-    "aws-sg-container": "~0.15.0",
+    "aws-ami-container": "~0.15.1",
+    "aws-elb-container": "~0.15.1",
+    "aws-sg-container": "~0.15.1",
     "blank-container": "~0.3.0",
     "bunyan": "^1.0.0",
     "callback-stream": "^1.0.2",
-    "docker-container": "~0.14.9",
+    "docker-container": "~0.15.0",
     "forever-monitor": "^1.3.0",
     "fs-extra": "~0.8.1",
     "generify": "^1.1.0",
