@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.15.0-pre3",
+  "version": "0.15.0-pre4",
   "license": "Artistic License 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "async": "^0.9.0",
-    "aws-ami-container": "~0.15.1",
+    "aws-ami-container": "~0.15.4",
     "aws-elb-container": "~0.15.1",
     "aws-sg-container": "~0.15.1",
     "blank-container": "~0.3.0",
