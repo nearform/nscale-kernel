@@ -161,6 +161,11 @@ describe('sysrev test', function() {
     done();
   });
 
+  it('should not find a system called \'.\'', function(done){
+    assert(sysrev.findSystem('.') === undefined);
+    done();
+  });
+
   it('should find a container from a guid', function(done){
     var systems = sysrev.listSystems();
     sysrev.findContainer(systems[0].id, '22', 'development', function(err, containerId) {
