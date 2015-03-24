@@ -21,6 +21,7 @@
     "aws-ami-container": "~0.15.1",
     "aws-elb-container": "~0.15.1",
     "aws-sg-container": "~0.15.1",
+    "aws-autoscaling-container": "~0.1.0",
     "blank-container": "~0.3.0",
     "bunyan": "^1.0.0",
     "callback-stream": "^1.0.2",
