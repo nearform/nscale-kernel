@@ -6,12 +6,12 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.15.1",
+  "version": "0.16.0",
   "license": "Artistic License 2.0",
-  "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
     "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)",
-    "Matteo Collina <matteo.collina@nearform.com>"
+    "Matteo Collina <hello@matteocollina.com>",
+    "Luca Lanziani <luca@lanziani.com>"
   ],
   "engines": {
     "node": "*"
