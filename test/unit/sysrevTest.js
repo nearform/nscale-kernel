@@ -147,6 +147,23 @@ describe('sysrev test', function() {
     });
   });
 
+  it('should re-mark the deployed revision', function(done){
+    sysrev.listRevisions(systemId, function(err, revs) {
+      assert(!err);
+      sysrev.markDeployedRevision(user, systemId, revs[0].id, 'development', function(err) {
+        assert(!err);
+        sysrev.markDeployedRevision(user, systemId, revs[0].id, 'development', function(err) {
+          assert(!err);
+          sysrev.getDeployedRevision(systemId, 'development', function(err, json) {
+            assert(!err);
+            assert(json);
+            done();
+          });
+        });
+      });
+    });
+  });
+
   it('should list the available systems', function(done){
     var systems = sysrev.listSystems();
     assert(systems);
