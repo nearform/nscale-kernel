@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "async": "^0.9.0",
-    "aws-ami-container": "~0.15.4",
+    "aws-ami-container": "~0.16.0",
     "aws-elb-container": "~0.15.1",
     "aws-sg-container": "~0.16.0",
     "aws-autoscaling-container": "~0.1.0",
