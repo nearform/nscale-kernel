@@ -42,7 +42,7 @@
     "nscale-planner": "~0.1.1",
     "nscale-protocol": "~0.14.6",
     "nscale-util": "~0.12.0",
-    "process-container": "~0.3.0",
+    "process-container": "~0.4.0",
     "semver": "^2.3.0",
     "split2": "^0.2.1",
     "urlencode": "^0.2.0",
