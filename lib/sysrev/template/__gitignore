@@ -15,6 +15,7 @@ npm-debug.log
 
 .idea/
 .settings/
+.DS_STORE
 
 dist
 .tmp
