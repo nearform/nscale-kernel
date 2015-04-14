@@ -14,14 +14,35 @@
  */
 
 'use strict';
-
+var fs = require('fs');
 var path = require('path');
-var spawn = require('child_process').spawn;
-spawn(
-  process.execPath,
-  [
-    '--abort_on_uncaught_exception',
-    path.join(__dirname, '_nscale-kernel.js')
-  ].concat(process.argv.slice(2)),
-  { stdio: 'inherit' }
-);
+var opts = require('yargs')
+            .usage('Usage: $0 --config="config file" --test')
+            .alias('c', 'config')
+            .alias('t', 'test')
+            .demand(['c'])
+            .argv;
+
+var config = require(path.resolve(opts.config));
+var Kernel = require('../lib/kernel');
+config.test = opts.test;
+var pidFile = path.join(config.kernel.root, 'data', '.nscale-server');
+
+var kernel = new Kernel(config, function(err) {
+  if (err) { throw err; }
+  kernel.start();
+  
+  fs.writeFile(pidFile, process.pid, function(err) {
+    if (err) { throw err; }
+  });
+});
+
+process.on('exit', function(code) {
+  if (fs.existsSync(pidFile)) { fs.unlinkSync(pidFile); }
+});
+
+var signals = ['SIGINT', 'SIGTERM', 'SIGHUP']
+
+signals.forEach(function(signal) {
+  process.on(signal, process.exit);
+});
