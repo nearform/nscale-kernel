@@ -6,7 +6,7 @@
     "deployer",
     "nscale"
   ],
-  "version": "0.16.2",
+  "version": "0.16.3",
   "license": "Artistic License 2.0",
   "contributors": [
     "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)",
@@ -36,7 +36,7 @@
     "nscale-direct-analyzer": "~0.16.0",
     "nscale-local-analyzer": "~0.16.0",
     "nscale-chaos-monkey": "^0.1.0",
-    "nscale-compiler": "~0.15.0",
+    "nscale-compiler": "~0.16.0",
     "nscale-noauth": "~0.2.0",
     "nscale-planner": "~0.1.1",
     "nscale-protocol": "~0.14.6",
