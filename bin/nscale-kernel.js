@@ -26,7 +26,7 @@ var opts = require('yargs')
 var config = require(path.resolve(opts.config));
 var Kernel = require('../lib/kernel');
 config.test = opts.test;
-var pidFile = path.join(config.kernel.root, 'data', '.nscale-server');
+var pidFile = path.join(config.kernel.root, 'data', '.nscale-kernel');
 
 var kernel = new Kernel(config, function(err) {
   if (err) { throw err; }
