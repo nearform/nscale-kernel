@@ -1,32 +1,7 @@
 {
   "kernel": {
-    "port": "8010",
+    "port": "3223",
     "root": "./data/"
-  },
-  "api": {
-    "port": 3000,
-    "sdkhost": "localhost",
-    "sdkport": "3223",
-    "https": false,
-    "cors": {
-      "allowedDomains": ["http://localhost:9000"]
-    },
-    "github": {
-      "scope": ["repo", "user:email"],
-      "clientID": "CLIENT_ID",
-      "clientSecret": "SECRET",
-      "urlhost": "http://localhost:3000",
-      "redirect": {
-        "success": "http://localhost:9000/home",
-        "failure": "http://localhost:9000"
-      }
-    }
-  },
-  "web": {
-    "ip": "0.0.0.0",
-    "port": 9000,
-    "apiserver": "http://localhost:3000",
-    "apibase": "/api/1.0"
   },
   "modules": {
     "protocol": {
