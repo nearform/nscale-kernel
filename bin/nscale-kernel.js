@@ -41,8 +41,10 @@ process.on('exit', function(code) {
   if (fs.existsSync(pidFile)) { fs.unlinkSync(pidFile); }
 });
 
-var signals = ['SIGINT', 'SIGTERM', 'SIGHUP']
+var signals = ['SIGINT', 'SIGTERM', 'SIGHUP'];
 
 signals.forEach(function(signal) {
-  process.on(signal, process.exit);
+  process.on(signal, function() {
+    kernel.stop();
+  });
 });
