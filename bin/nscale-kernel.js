@@ -29,9 +29,16 @@ config.test = opts.test;
 var pidFile = path.join(config.kernel.root, 'data', '.nscale-kernel');
 
 var kernel = new Kernel(config, function(err) {
-  if (err) { throw err; }
+  if (err) {
+    // this is needed to get out of the nodegit promise
+    // context
+    process.nextTick(function () {
+      throw err;
+    });
+    return
+  }
   kernel.start();
-  
+
   fs.writeFile(pidFile, process.pid, function(err) {
     if (err) { throw err; }
   });
