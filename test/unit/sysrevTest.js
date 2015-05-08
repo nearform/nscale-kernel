@@ -185,7 +185,7 @@ describe('sysrev test', function() {
 
   it('should find a container from a guid', function(done){
     var systems = sysrev.listSystems();
-    sysrev.findContainer(systems[0].id, '22', 'development', function(err, containerId) {
+    sysrev.findContainer(systems[0].id, 'latest', '22', 'development', function(err, containerId) {
       assert(containerId);
       done();
     });
