@@ -39,7 +39,7 @@
     "nscale-compiler": "~0.16.0",
     "nscale-noauth": "~0.2.0",
     "nscale-planner": "~0.1.1",
-    "nscale-protocol": "~0.14.6",
+    "nscale-protocol": "~0.16.0",
     "nscale-util": "~0.12.0",
     "process-container": "~0.4.0",
     "semver": "^2.3.0",
