@@ -23,35 +23,48 @@ var opts = require('yargs')
             .demand(['c'])
             .argv;
 
+var cluster = require('cluster');
 var config = require(path.resolve(opts.config));
 var Kernel = require('../lib/kernel');
 config.test = opts.test;
 var pidFile = path.join(config.kernel.root, 'data', '.nscale-kernel');
 
-var kernel = new Kernel(config, function(err) {
-  if (err) {
-    // this is needed to get out of the nodegit promise
-    // context
-    process.nextTick(function () {
-      throw err;
+
+if (cluster.isMaster) {
+  cluster.fork();
+  cluster.on('exit', function(worker, code) {
+    if (code !== 0) {
+      cluster.fork();
+    }
+  });
+}
+
+if (cluster.isWorker) {
+  var kernel = new Kernel(config, function(err) {
+    if (err) {
+      // this is needed to get out of the nodegit promise context
+      process.nextTick(function () {
+        throw err;
+      });
+      return;
+    }
+    kernel.start();
+
+    fs.writeFile(pidFile, process.pid, function(err) {
+      if (err) { throw err; }
     });
-    return
-  }
-  kernel.start();
-
-  fs.writeFile(pidFile, process.pid, function(err) {
-    if (err) { throw err; }
   });
-});
 
-process.on('exit', function(code) {
-  if (fs.existsSync(pidFile)) { fs.unlinkSync(pidFile); }
-});
-
-var signals = ['SIGINT', 'SIGTERM', 'SIGHUP'];
-
-signals.forEach(function(signal) {
-  process.on(signal, function() {
-    kernel.stop();
+  process.on('exit', function() {
+    if (fs.existsSync(pidFile)) { fs.unlinkSync(pidFile); }
   });
-});
+
+  var signals = ['SIGINT', 'SIGTERM', 'SIGHUP'];
+
+  signals.forEach(function(signal) {
+    process.on(signal, function() {
+      kernel.stop();
+    });
+  });
+}
+
