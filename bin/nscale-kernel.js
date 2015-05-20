@@ -17,9 +17,10 @@
 var fs = require('fs');
 var path = require('path');
 var opts = require('yargs')
-            .usage('Usage: $0 --config="config file" --test')
+            .usage('Usage: $0 --config="config file" --test --debug')
             .alias('c', 'config')
             .alias('t', 'test')
+            .alias('d', 'debug')
             .demand(['c'])
             .argv;
 
@@ -30,16 +31,8 @@ config.test = opts.test;
 var pidFile = path.join(config.kernel.root, 'data', '.nscale-kernel');
 
 
-if (cluster.isMaster) {
-  cluster.fork();
-  cluster.on('exit', function(worker, code) {
-    if (code !== 0) {
-      cluster.fork();
-    }
-  });
-}
 
-if (cluster.isWorker) {
+function run() {
   var kernel = new Kernel(config, function(err) {
     if (err) {
       // this is needed to get out of the nodegit promise context
@@ -66,5 +59,24 @@ if (cluster.isWorker) {
       kernel.stop();
     });
   });
+}
+
+
+
+if (opts.debug) {
+  run();
+}
+else {
+  if (cluster.isMaster) {
+    cluster.fork();
+    cluster.on('exit', function(worker, code) {
+      if (code !== 0) {
+        cluster.fork();
+      }
+    });
+  }
+  if (cluster.isWorker) {
+    run();
+  }
 }
 
