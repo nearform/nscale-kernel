@@ -26,6 +26,7 @@
     "bunyan": "^1.0.0",
     "callback-stream": "^1.0.2",
     "docker-container": "~0.16.0",
+    "do-droplet-container": "foo in progress",
     "fs-extra": "~0.8.1",
     "generify": "^1.1.0",
     "gift": "^0.4.2",
